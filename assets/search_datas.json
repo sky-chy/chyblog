@@ -89,38 +89,6 @@
 
   
     {
-      "title"    : "Android四大组件以及相关用法——Activity",
-      "category" : "Android",
-      
-      "url"      : "https://chyblog.cn/2021/01/24/components-of-android-activity/",
-      "keywords" : "Android四大组件, 四大组件, Activity的用法, 生命周期, Activity的生命周期, Activity生命周期, Android四大组件"
-    } ,
-  
-    {
-      "title"    : "Android四大组件以及相关用法——Broadcast",
-      "category" : "Android",
-      
-      "url"      : "https://chyblog.cn/2021/01/24/components-of-android-broadcast/",
-      "keywords" : "Android, 四大组件, Broadcast, BroadcastReceiver, Android四大组件"
-    } ,
-  
-    {
-      "title"    : "Android四大组件以及相关用法——ContentProvider",
-      "category" : "Android",
-      
-      "url"      : "https://chyblog.cn/2021/01/24/components-of-android-content-provider/",
-      "keywords" : "Android, 四大组件, ContentProvider, Android四大组件"
-    } ,
-  
-    {
-      "title"    : "Android四大组件以及相关用法——Server",
-      "category" : "Android",
-      
-      "url"      : "https://chyblog.cn/2021/01/24/components-of-android-server/",
-      "keywords" : "四大组件, Android四大组件, Server, 服务, 启动服务, 销毁服务, 生命周期, Server的生命周期, Server生命周期, Android四大组件"
-    } ,
-  
-    {
       "title"    : "使用opencv-python对视频进行指定帧画面保存",
       "category" : "Python3",
       
@@ -134,22 +102,6 @@
       
       "url"      : "https://chyblog.cn/2021/02/21/three-methods-of-filing-or-compressing-files/",
       "keywords" : "Python3教程, Python教程, 7z压缩, py7zr使用, 文件归档"
-    } ,
-  
-    {
-      "title"    : "Android的三种动画的对比",
-      "category" : "Android",
-      
-      "url"      : "https://chyblog.cn/2021/02/24/android-animation-detailed/",
-      "keywords" : "Android教程, android动画, 安卓动画, 属性动画, 帧动画, 视图动画, 补间动画"
-    } ,
-  
-    {
-      "title"    : "Android 各版本API的基本特性",
-      "category" : "Android",
-      
-      "url"      : "https://chyblog.cn/2021/02/25/basic-features-of-android-sdk/",
-      "keywords" : "Android SDK, Android, SDK特性, 安卓SDK"
     } ,
   
     {
