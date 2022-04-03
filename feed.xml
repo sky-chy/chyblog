@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://chyblog.cn/feed.xml" rel="self" type="application/atom+xml" /><link href="https://chyblog.cn/" rel="alternate" type="text/html" /><updated>2022-04-03T13:01:10+00:00</updated><id>https://chyblog.cn/feed.xml</id><title type="html">一切随猿</title><subtitle>不定时分享Windows操作、黑苹果安装和使用、Python、Android、Electron-Vue、Vue、Uni-app和小程序开发的教程或者资源的网站，免费提供一切在教程中出现的资源，也不定时提供一些可玩性比较高的软件</subtitle><entry><title type="html">Mac OS各个模块的介绍</title><link href="https://chyblog.cn/2022/04/03/Introduction-to-Mac-OS/" rel="alternate" type="text/html" title="Mac OS各个模块的介绍" /><published>2022-04-03T00:00:00+00:00</published><updated>2022-04-03T00:00:00+00:00</updated><id>https://chyblog.cn/2022/04/03/Introduction%20to%20Mac%20OS</id><content type="html" xml:base="https://chyblog.cn/2022/04/03/Introduction-to-Mac-OS/">&lt;p&gt;&lt;img src=&quot;/images/others/macos open wechat more5.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;</content><author><name>CHY</name></author><category term="MAC" /><summary type="html"></summary></entry><entry><title type="html">boundingClientRect重复回调</title><link href="https://chyblog.cn/2021/03/10/get-node-information-repeatedly/" rel="alternate" type="text/html" title="boundingClientRect重复回调" /><published>2021-03-10T00:00:00+00:00</published><updated>2021-03-10T00:00:00+00:00</updated><id>https://chyblog.cn/2021/03/10/get%20node%20information%20repeatedly</id><content type="html" xml:base="https://chyblog.cn/2021/03/10/get-node-information-repeatedly/">&lt;h3 id=&quot;一情景导入&quot;&gt;一、情景导入&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://chyblog.cn/feed.xml" rel="self" type="application/atom+xml" /><link href="https://chyblog.cn/" rel="alternate" type="text/html" /><updated>2022-04-03T13:18:39+00:00</updated><id>https://chyblog.cn/feed.xml</id><title type="html">一切随猿</title><subtitle>不定时分享Windows操作、黑苹果安装和使用、Python、Android、Electron-Vue、Vue、Uni-app和小程序开发的教程或者资源的网站，免费提供一切在教程中出现的资源，也不定时提供一些可玩性比较高的软件</subtitle><entry><title type="html">Mac OS各个模块的介绍</title><link href="https://chyblog.cn/2022/04/03/Introduction-to-Mac-OS/" rel="alternate" type="text/html" title="Mac OS各个模块的介绍" /><published>2022-04-03T00:00:00+00:00</published><updated>2022-04-03T00:00:00+00:00</updated><id>https://chyblog.cn/2022/04/03/Introduction%20to%20Mac%20OS</id><content type="html" xml:base="https://chyblog.cn/2022/04/03/Introduction-to-Mac-OS/">&lt;p&gt;&lt;img src=&quot;/images/posts/othersmacos open wechat more5.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;</content><author><name>CHY</name></author><category term="MAC" /><summary type="html"></summary></entry><entry><title type="html">boundingClientRect重复回调</title><link href="https://chyblog.cn/2021/03/10/get-node-information-repeatedly/" rel="alternate" type="text/html" title="boundingClientRect重复回调" /><published>2021-03-10T00:00:00+00:00</published><updated>2021-03-10T00:00:00+00:00</updated><id>https://chyblog.cn/2021/03/10/get%20node%20information%20repeatedly</id><content type="html" xml:base="https://chyblog.cn/2021/03/10/get-node-information-repeatedly/">&lt;h3 id=&quot;一情景导入&quot;&gt;一、情景导入&lt;/h3&gt;
 &lt;p&gt;近日，博主在自定义组件中使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uni.createSelectorQuery()&lt;/code&gt;这个API去获取节点信息来计算页面控件高度的时候，发现重复获取了一个数据，导致计算的数据不符合预期&lt;/p&gt;
 
 &lt;h3 id=&quot;二关键词&quot;&gt;二、关键词&lt;/h3&gt;
@@ -75,23 +75,23 @@
 &lt;ol&gt;
   &lt;li&gt;
     &lt;p&gt;打开访达[Finder]：
-&lt;img src=&quot;/images/others/macos open wechat more1.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/images/posts/othersmacos open wechat more1.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;在应用程序里面找到微信.app并在鼠标右键菜单里面打开包内容：
-&lt;img src=&quot;/images/others/macos open wechat more2.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/images/posts/othersmacos open wechat more2.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;找到WeChat这个程序：
-&lt;img src=&quot;/images/others/macos open wechat more3.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/images/posts/othersmacos open wechat more3.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;用终端的方式打开：
-&lt;img src=&quot;/images/others/macos open wechat more4.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/images/posts/othersmacos open wechat more4.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;现在就可以完美的实现双开微信了：
-&lt;img src=&quot;/images/others/macos open wechat more5.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/images/posts/othersmacos open wechat more5.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
