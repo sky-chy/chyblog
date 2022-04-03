@@ -4,9 +4,8 @@
 
         <div class="site-footer" role="contentinfo">
             <div class="copyright left mobile-block">
-                    © 2021
-                    <span title="{{ site.author}}">{{ site.author }} </span>
-                    <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备18156579号</a>
+                    © 2015
+                    <span title="{{ site.author}}">{{ site.author }}</span>
                     <a href="javascript:window.scrollTo(0,0)" class="right mobile-visible">TOP</a>
             </div>
 
@@ -56,7 +55,7 @@
     {% if page.sequence %}
     <script src="{{ assets_base_url }}/assets/js/webfont.js"></script>
     <script src="{{ assets_base_url }}/assets/js/snap.svg-min.js"></script>
-    <script src="{{ assets_base_url }}/assets/js/underscore-min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
     <script src="{{ assets_base_url }}/assets/vendor/js-sequence-diagrams/dist/sequence-diagram-min.js"></script>
     <link rel="stylesheet" href="{{ assets_base_url }}/assets/vendor/js-sequence-diagrams/dist/sequence-diagram-min.css">
     <script>
@@ -113,21 +112,6 @@ $(document).ready(function(){
   });
 });
     </script>
-    {% endif %}
-
-    {% if site.google.analytics_id %}
-    <div style="display:none">
-      <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-        ga('create', '{{ site.google.analytics_id }}', 'auto');
-        ga('send', 'pageview');
-
-      </script>
-    </div>
     {% endif %}
 </body>
 </html>

@@ -20,14 +20,14 @@ mindmap: true
 ### 超链接
 
 ```
-[靠谱-ing](https://mazhuang.org)
+[靠谱-ing](https://chyblog.cn)
 
-<https://mazhuang.org>
+<https://chyblog.cn>
 ```
 
-[靠谱-ing](https://mazhuang.org)  
+[靠谱-ing](https://chyblog.cn)  
 
-<https://mazhuang.org>
+<https://chyblog.cn>
 
 ### 列表
 
