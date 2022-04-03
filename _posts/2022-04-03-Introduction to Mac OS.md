@@ -1,8 +1,8 @@
 ---
 topmost: false #置顶
 layout: post
-title: Mac OS的使用（一）—各个模块的介绍
-categories: [MAC]
+title: Mac OS的使用(一)—各个模块的介绍
+categories: [Mac]
 author: CHY
 description: Mac OS的各个模块介绍
 keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Mac OS, OS, Mac, 苹果系统, 黑苹果, 小米, XiaoMi笔记本, XiaoMi, 笔记本, 15 Pro
