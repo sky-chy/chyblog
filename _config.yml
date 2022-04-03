@@ -1,7 +1,7 @@
 # ---------------- #
 #   Main Configs   #
 # ---------------- #
-baseurl:https://chyblog.cn
+baseurl:
 url: https://chyblog.cn
 date_format: "ordinal"
 title: 一切随猿
