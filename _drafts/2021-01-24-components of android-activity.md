@@ -17,7 +17,7 @@ keywords: Android四大组件, 四大组件, Activity的用法, 生命周期, Ac
 
   1. Activity生命周期都有哪些？每个生命周期都负责什么？
 
-      ![生命周期图](/images/android/activity life cycle.webp)
+      ![生命周期图](/images/posts/android/activity life cycle.webp)
 
       > onCreate()：不可见状态。第一次创建时调用，创建视图，并且能传递该Activity的上一个状态的Bundle参数。
       
@@ -59,7 +59,7 @@ keywords: Android四大组件, 四大组件, Activity的用法, 生命周期, Ac
 
   1. Activity启动模式都有哪些？每个启动模式都有何特点？该如何使用？
 
-      ![生命周期图](/images/android/activity start mode.png)
+      ![生命周期图](/images/posts/android/activity start mode.png)
 
       > Standard 标准模式，也是默认模式：
       - Android创建Activity时的默认模式，永远不会调用onNewIntent()。假设没有为Activity设置启动模式的话，默觉得标准模式。每次启动一个Activity都会又一次创建一个新的实例入栈，无论这个实例是否存在。
