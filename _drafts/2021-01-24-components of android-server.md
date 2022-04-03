@@ -17,7 +17,7 @@ keywords: 四大组件, Android四大组件, Server, 服务, 启动服务, 销�
 
   1. Server生命周期都有哪些？常用的方法有哪些？
 
-      ![生命周期图](/static/images/android/server life cycle.webp)
+      ![生命周期图](/images/android/server life cycle.webp)
 
       > onCreate()：首次创建服务时，系统将调用此方法。如果服务已在运行，则不会调用此方法，该方法只调用一次。
 
@@ -46,7 +46,7 @@ keywords: 四大组件, Android四大组件, Server, 服务, 启动服务, 销�
 
   1. Server的启动方式有哪些？生命周期怎么运作？
 
-      ![生命周期图](/static/images/android/server start mode.webp)
+      ![生命周期图](/images/android/server start mode.webp)
 
       > 第一种，start方式，该方式的执行过程为onCreate➜onStartCommad➜onDestory：
         - 用过start方式开启服务即便是调用者销毁service也不会被销毁，与现有的activity分离，不能与activity进行通信

@@ -193,4 +193,4 @@ if __name__ == '__main__':
 ### 九、相关资源
 [Python3 os.path模块文档](https://docs.python.org/zh-cn/3.7/library/os.path.html)
 
-[CaptureUtil.py文件下载](/static/files/python/CaptureUtil.py)
+[CaptureUtil.py文件下载](/files/python/CaptureUtil.py)

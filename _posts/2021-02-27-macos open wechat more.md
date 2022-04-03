@@ -18,19 +18,19 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, MacBook Pro, 多开微�
 
 ### 三、实际操作
 1. 打开访达[Finder]：
-![生命周期图](/static/images/others/macos open wechat more1.png)
+![生命周期图](/images/others/macos open wechat more1.png)
 
 1. 在应用程序里面找到微信.app并在鼠标右键菜单里面打开包内容：
-![生命周期图](/static/images/others/macos open wechat more2.png)
+![生命周期图](/images/others/macos open wechat more2.png)
 
 1. 找到WeChat这个程序：
-![生命周期图](/static/images/others/macos open wechat more3.png)
+![生命周期图](/images/others/macos open wechat more3.png)
 
 1. 用终端的方式打开：
-![生命周期图](/static/images/others/macos open wechat more4.png)
+![生命周期图](/images/others/macos open wechat more4.png)
 
 1. 现在就可以完美的实现双开微信了：
-![生命周期图](/static/images/others/macos open wechat more5.png)
+![生命周期图](/images/others/macos open wechat more5.png)
 
 ### 四、注意事项
 博主尝试过多次使用终端或者复制副本再使用终端来打开多个微信，但实验发现，只有最开始的那个终端有效

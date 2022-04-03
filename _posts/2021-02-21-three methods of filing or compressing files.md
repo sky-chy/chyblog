@@ -236,4 +236,4 @@ keywords: Python3教程, Python教程, 7z压缩, py7zr使用, 文件归档
 
 [py7zr模块的官网](https://github.com/miurahr/py7zr)
 
-[ZipFileUtil.py文件下载](/static/files/python/ZipFileUtil.py)
+[ZipFileUtil.py文件下载](/files/python/ZipFileUtil.py)
