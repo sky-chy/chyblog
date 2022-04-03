@@ -1,27 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://chyblog.cn/feed.xml" rel="self" type="application/atom+xml" /><link href="https://chyblog.cn/" rel="alternate" type="text/html" /><updated>2022-04-03T14:25:47+00:00</updated><id>https://chyblog.cn/feed.xml</id><title type="html">一切随猿</title><subtitle>不定时分享Windows操作、黑苹果安装和使用、Python、Android、Electron-Vue、Vue、Uni-app和小程序开发的教程或者资源的网站，免费提供一切在教程中出现的资源，也不定时提供一些可玩性比较高的软件</subtitle><entry><title type="html">Mac OS的使用（一）——各个模块的介绍</title><link href="https://chyblog.cn/2022/04/03/Introduction-to-Mac-OS/" rel="alternate" type="text/html" title="Mac OS的使用（一）——各个模块的介绍" /><published>2022-04-03T00:00:00+00:00</published><updated>2022-04-03T00:00:00+00:00</updated><id>https://chyblog.cn/2022/04/03/Introduction%20to%20Mac%20OS</id><content type="html" xml:base="https://chyblog.cn/2022/04/03/Introduction-to-Mac-OS/">&lt;h3 id=&quot;一前言&quot;&gt;一、前言&lt;/h3&gt;
-&lt;p&gt;Mac OS撞见开发者或者设计师，就犹如李白《将进酒》中写下的“此中有真意，欲辨已忘言”，但很多开发者或者设计师初次接触苹果的Mac OS时，往往不是很清楚Mac OS的各项操作，以至于无法深度发掘Mac OS中的各项功能，下面就由博主来大概介绍一下Mac OS的几个常用模块&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://chyblog.cn/feed.xml" rel="self" type="application/atom+xml" /><link href="https://chyblog.cn/" rel="alternate" type="text/html" /><updated>2022-04-03T15:18:14+00:00</updated><id>https://chyblog.cn/feed.xml</id><title type="html">一切随猿</title><subtitle>不定时分享Windows操作、黑苹果安装和使用、Python、Android、Electron-Vue、Vue、Uni-app和小程序开发的教程或者资源的网站，免费提供一切在教程中出现的资源，也不定时提供一些可玩性比较高的软件</subtitle><author><name>CHY</name></author><entry><title type="html">Mac OS的使用（一）——各个模块的介绍</title><link href="https://chyblog.cn/2022/04/03/Introduction-to-Mac-OS/" rel="alternate" type="text/html" title="Mac OS的使用（一）——各个模块的介绍" /><published>2022-04-03T00:00:00+00:00</published><updated>2022-04-03T00:00:00+00:00</updated><id>https://chyblog.cn/2022/04/03/Introduction%20to%20Mac%20OS</id><content type="html" xml:base="https://chyblog.cn/2022/04/03/Introduction-to-Mac-OS/">&lt;h3 id=&quot;一前言&quot;&gt;一、前言&lt;/h3&gt;
+&lt;p&gt;Mac OS的系统架构和屏幕色彩撞见开发者或者设计师，就犹如李白《将进酒》中写下的“此中有真意，欲辨已忘言”，但很多开发者或者设计师初次接触苹果的Mac OS时，往往不是很清楚Mac OS的各项操作，以至于无法深度发掘Mac OS中的各项功能，下面就由博主来大概介绍一下Mac OS的几个常用模块&lt;/p&gt;
 
 &lt;h3 id=&quot;二正文&quot;&gt;二、正文&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&quot;/images/posts/mac/mac-os-introduction.png&quot; alt=&quot;Mac 模块介绍&quot; /&gt;
 如上图所示：&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt;，是一个苹果的图标，这个位置是系统控制的入口，例如：系统偏好设置（登录appleID，设置屏保，设置锁屏等），强制退出软件，关机等&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2&lt;/code&gt;，是软件的菜单，Mac OS的软件菜单与Windows的软件菜单不一样，Mac OS中的所有软件菜单一般都分离到系统状态栏的左边（在屏幕的左上角，靠近系统控制入口）&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;3&lt;/code&gt;，是系统的状态栏，Mac OS中的大部分软件如果需要常驻后台运行的，基本都会在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;3&lt;/code&gt;处加入软件的图标，例如微信（从左边数到第4个就是微信的图标）就是一个很好的例子&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4&lt;/code&gt;，这个小圈圈的图标名为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;启动台&lt;/code&gt;，是Mac OS中所有用户软件的入口，即用户安装的所有软件均在这里面保留，若有需要，直接点击此处进去启动对应的程序即可&lt;/p&gt;
-
 &lt;ul&gt;
-  &lt;li&gt;该图标左边的那个程序名为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;访达&lt;/code&gt;，与Windows中的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;资源管理器&lt;/code&gt;的功能是一样的，均是管理文件的一个软件&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt;，是一个苹果的图标，这个位置是系统控制的入口，例如：系统偏好设置（登录appleID，设置屏保，设置锁屏等），强制退出软件，关机等&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2&lt;/code&gt;，是已打开软件的菜单（例如博主正在使用的VSCode），Mac OS的用户软件菜单与Windows的软件菜单不一样，Windows中用户软件的菜单都是和软件一体化开发的，而Mac OS中的所有软件菜单一般都分离到系统状态栏的左边（在屏幕的左上角，靠近系统控制入口），例如软件的设置菜单等&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;3&lt;/code&gt;，是系统的状态栏，Mac OS中的大部分软件如果需要常驻后台运行的，基本都会在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;3&lt;/code&gt;处加入软件的图标，例如微信（从左边数到第4个就是微信的图标）就是一个很好的例子&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4&lt;/code&gt;，这个小圈圈的图标名为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;启动台&lt;/code&gt;，是Mac OS中所有用户软件的入口，即用户安装的所有软件均在这里面保留，若有需要，直接点击此处进去启动对应的程序即可&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;该图标左边的那个程序名为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;访达&lt;/code&gt;，与Windows中的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;资源管理器&lt;/code&gt;的功能是一样的，均是管理文件的一个软件&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;5&lt;/code&gt;，这个大圈圈名为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;程序坞&lt;/code&gt;，类似Windows的底部导航栏，可以通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;右键菜单的选项中的在程序坞中保留&lt;/code&gt;把打开的软件固定在此处，例如微信、qq、浏览器等一些常用的软件&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;6&lt;/code&gt;，这个小圈圈的垃圾桶名为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;废纸篓&lt;/code&gt;，与Windows中的回收站是一样的功能，专门负责收集一些删除的文件&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;三注意事项&quot;&gt;三、注意事项&lt;/h3&gt;
-&lt;p&gt;无&lt;/p&gt;
 
-&lt;h3 id=&quot;四相关资源&quot;&gt;四、相关资源&lt;/h3&gt;
-&lt;p&gt;无&lt;/p&gt;</content><author><name>CHY</name></author><category term="MAC" /><summary type="html">一、前言 Mac OS撞见开发者或者设计师，就犹如李白《将进酒》中写下的“此中有真意，欲辨已忘言”，但很多开发者或者设计师初次接触苹果的Mac OS时，往往不是很清楚Mac OS的各项操作，以至于无法深度发掘Mac OS中的各项功能，下面就由博主来大概介绍一下Mac OS的几个常用模块</summary></entry><entry><title type="html">boundingClientRect重复回调</title><link href="https://chyblog.cn/2021/03/10/get-node-information-repeatedly/" rel="alternate" type="text/html" title="boundingClientRect重复回调" /><published>2021-03-10T00:00:00+00:00</published><updated>2021-03-10T00:00:00+00:00</updated><id>https://chyblog.cn/2021/03/10/get%20node%20information%20repeatedly</id><content type="html" xml:base="https://chyblog.cn/2021/03/10/get-node-information-repeatedly/">&lt;h3 id=&quot;一情景导入&quot;&gt;一、情景导入&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Mac OS中快捷键与Windows中的快捷键也有很大的不一样&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;黑苹果与Mac OS的快捷键也会有不一样，这个后面的快捷键使用的文章会说到&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;如果你对Mac OS的使用有更多的未解之谜，欢迎在下面评论留言，博主都会一一解答！！！&lt;/p&gt;</content><author><name>CHY</name></author><category term="MAC" /><summary type="html">一、前言 Mac OS的系统架构和屏幕色彩撞见开发者或者设计师，就犹如李白《将进酒》中写下的“此中有真意，欲辨已忘言”，但很多开发者或者设计师初次接触苹果的Mac OS时，往往不是很清楚Mac OS的各项操作，以至于无法深度发掘Mac OS中的各项功能，下面就由博主来大概介绍一下Mac OS的几个常用模块</summary></entry><entry><title type="html">boundingClientRect重复回调</title><link href="https://chyblog.cn/2021/03/10/get-node-information-repeatedly/" rel="alternate" type="text/html" title="boundingClientRect重复回调" /><published>2021-03-10T00:00:00+00:00</published><updated>2021-03-10T00:00:00+00:00</updated><id>https://chyblog.cn/2021/03/10/get%20node%20information%20repeatedly</id><content type="html" xml:base="https://chyblog.cn/2021/03/10/get-node-information-repeatedly/">&lt;h3 id=&quot;一情景导入&quot;&gt;一、情景导入&lt;/h3&gt;
 &lt;p&gt;近日，博主在自定义组件中使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uni.createSelectorQuery()&lt;/code&gt;这个API去获取节点信息来计算页面控件高度的时候，发现重复获取了一个数据，导致计算的数据不符合预期&lt;/p&gt;
 
 &lt;h3 id=&quot;二关键词&quot;&gt;二、关键词&lt;/h3&gt;
@@ -597,4 +617,4 @@
 &lt;h3 id=&quot;九相关资源&quot;&gt;九、相关资源&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&quot;https://docs.python.org/zh-cn/3.7/library/os.path.html&quot;&gt;Python3 os.path模块文档&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;/files/python/CaptureUtil.py&quot;&gt;CaptureUtil.py文件下载&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="Python3" /><category term="opencv-python" /><summary type="html">一、情景导入 最近我有位搞短视频的朋友跟我说，他上传视频到短视频平台，最后选择封面的时候，感觉那些平台给出来的截图有点鸡肋，但是又不想自己去看完视频来截取封面图片，问问我有没有什么办法可以让多个视频快速产生多张图片，最好是随机产生的，还需要可以自由控制生成数量的，话不多说，搞起！</summary></entry></feed>
+&lt;p&gt;&lt;a href=&quot;/files/python/CaptureUtil.py&quot;&gt;CaptureUtil.py文件下载&lt;/a&gt;&lt;/p&gt;</content><author><name>CHY</name></author><category term="Python3" /><category term="opencv-python" /><summary type="html">一、情景导入 最近我有位搞短视频的朋友跟我说，他上传视频到短视频平台，最后选择封面的时候，感觉那些平台给出来的截图有点鸡肋，但是又不想自己去看完视频来截取封面图片，问问我有没有什么办法可以让多个视频快速产生多张图片，最好是随机产生的，还需要可以自由控制生成数量的，话不多说，搞起！</summary></entry></feed>
