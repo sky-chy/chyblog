@@ -1,0 +1,924 @@
+
+
+[
+  
+  
+    {
+      "title"    : "页面没有找到",
+      "url"      : "https://chyblog.cn/404.html",
+      "keywords" : "404"
+    } ,
+  
+  
+  
+    {
+      "title"    : "关于本站",
+      "url"      : "https://chyblog.cn/about/",
+      "keywords" : "Chen Hongye, 陈宏业"
+    } ,
+  
+  
+  
+    {
+      "title"    : "归档",
+      "url"      : "https://chyblog.cn/archives/",
+      "keywords" : "归档"
+    } ,
+  
+  
+  
+    {
+      "title"    : "Categories",
+      "url"      : "https://chyblog.cn/categories/",
+      "keywords" : "分类"
+    } ,
+  
+  
+  
+    {
+      "title"    : "捐助 / Donate",
+      "url"      : "https://chyblog.cn/donate/",
+      "keywords" : "Donate"
+    } ,
+  
+  
+  
+  
+  
+    {
+      "title"    : "Links",
+      "url"      : "https://chyblog.cn/links/",
+      "keywords" : "友情链接"
+    } ,
+  
+  
+  
+    {
+      "title"    : "mindmap",
+      "url"      : "https://chyblog.cn/mindmap-viewer/",
+      "keywords" : "mindmap"
+    } ,
+  
+  
+  
+    {
+      "title"    : "Open Source Projects",
+      "url"      : "https://chyblog.cn/open-source/",
+      "keywords" : "开源,open-source,GitHub,开源项目"
+    } ,
+  
+  
+  
+  
+  
+    {
+      "title"    : "Wiki",
+      "url"      : "https://chyblog.cn/wiki/",
+      "keywords" : "维基, Wiki"
+    } ,
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+    {
+      "title"    : "Android四大组件以及相关用法——Activity",
+      "category" : "Android",
+      
+      "url"      : "https://chyblog.cn/2021/01/24/components-of-android-activity/",
+      "keywords" : "Android四大组件, 四大组件, Activity的用法, 生命周期, Activity的生命周期, Activity生命周期, Android四大组件"
+    } ,
+  
+    {
+      "title"    : "Android四大组件以及相关用法——Broadcast",
+      "category" : "Android",
+      
+      "url"      : "https://chyblog.cn/2021/01/24/components-of-android-broadcast/",
+      "keywords" : "Android, 四大组件, Broadcast, BroadcastReceiver, Android四大组件"
+    } ,
+  
+    {
+      "title"    : "Android四大组件以及相关用法——ContentProvider",
+      "category" : "Android",
+      
+      "url"      : "https://chyblog.cn/2021/01/24/components-of-android-content-provider/",
+      "keywords" : "Android, 四大组件, ContentProvider, Android四大组件"
+    } ,
+  
+    {
+      "title"    : "Android四大组件以及相关用法——Server",
+      "category" : "Android",
+      
+      "url"      : "https://chyblog.cn/2021/01/24/components-of-android-server/",
+      "keywords" : "四大组件, Android四大组件, Server, 服务, 启动服务, 销毁服务, 生命周期, Server的生命周期, Server生命周期, Android四大组件"
+    } ,
+  
+    {
+      "title"    : "使用opencv-python对视频进行指定帧画面保存",
+      "category" : "Python3",
+      
+      "url"      : "https://chyblog.cn/2021/02/20/save-the-video-frame/",
+      "keywords" : "Python教程, Python3教程, opencv-python, 视频处理, 帧画面, 自媒体, 保存图片"
+    } ,
+  
+    {
+      "title"    : "Python3对文件的3种归档或者压缩打包方法",
+      "category" : "Python3",
+      
+      "url"      : "https://chyblog.cn/2021/02/21/three-methods-of-filing-or-compressing-files/",
+      "keywords" : "Python3教程, Python教程, 7z压缩, py7zr使用, 文件归档"
+    } ,
+  
+    {
+      "title"    : "Android的三种动画的对比",
+      "category" : "Android",
+      
+      "url"      : "https://chyblog.cn/2021/02/24/android-animation-detailed/",
+      "keywords" : "Android教程, android动画, 安卓动画, 属性动画, 帧动画, 视图动画, 补间动画"
+    } ,
+  
+    {
+      "title"    : "Android 各版本API的基本特性",
+      "category" : "Android",
+      
+      "url"      : "https://chyblog.cn/2021/02/25/basic-features-of-android-sdk/",
+      "keywords" : "Android SDK, Android, SDK特性, 安卓SDK"
+    } ,
+  
+    {
+      "title"    : "MacBook Pro 双开微信的方法",
+      "category" : "MacBook",
+      
+      "url"      : "https://chyblog.cn/2021/02/27/macos-open-wechat-more/",
+      "keywords" : "陈宏业, CHY, 一切随猿, 教程, 网站, MacBook Pro, 多开微信, 双开微信"
+    } ,
+  
+    {
+      "title"    : "boundingClientRect重复回调",
+      "category" : "小程序",
+      
+      "url"      : "https://chyblog.cn/2021/03/10/get-node-information-repeatedly/",
+      "keywords" : "uniapp, uni.createSelectorQuery,小程序API,Uniapp Api,计算高度,uniapp计算控件高度"
+    } ,
+  
+    {
+      "title"    : "JSON",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-3rd-json/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "网络请求",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-3rd-network/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "ORM",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-3rd-orm/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "动画",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-animation/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "架构模式",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-arch-mode/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "体系结构",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-arch/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "ART 与 Dalvik 的区别",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-art-and-dalvik/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "开机自启动",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-auto-boot/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "Activity",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-components-activity/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "BroadcastReceiver",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-components-broadcastreceiver/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "Fragment",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-components-fragment/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "Intent",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-components-intent/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "Service",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-components-service/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "Context",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-context/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "事件分发机制",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-event-dispatch/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "进程间通信",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-ipc/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "消息机制",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-messages/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "Android 开发技术概述",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-overview/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "插件化",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-plugin/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "坐标系",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-position/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "Android 逆向工程",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-reverse-engineering/",
+      "keywords" : "keyword1, keyword2"
+    } ,
+  
+    {
+      "title"    : "屏幕适配",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-screen-support/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "软键盘",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-softinput/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "Android Studio",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-studio/",
+      "keywords" : "Android, Android Studio"
+    } ,
+  
+    {
+      "title"    : "Awesome Adb",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-tools-adb/",
+      "keywords" : "adb, Andriod Debug Bridge"
+    } ,
+  
+    {
+      "title"    : "构建和签名",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-tools-build/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "更新 UI",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-update-ui/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "Button",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-view-button/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "CheckBox",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-view-checkbox/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "Dialog",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-view-dialog/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "EditText",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-view-edittext/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "ImageView",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-view-imageview/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "LinearLayout",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-view-linearlayout/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "ListView",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-view-listview/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "RecyclerView",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-view-recyclerview/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "TabLayout",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-view-tablayout/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "TextView",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-view-textview/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "Toolbar",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-view-toolbar/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "ViewPager",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-view-viewpager/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "WebView",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-view-webview/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "View",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/android-view/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "Axure",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/axure/",
+      "keywords" : "Axure RP"
+    } ,
+  
+    {
+      "title"    : "Badminton",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/badminton/",
+      "keywords" : "羽毛球"
+    } ,
+  
+    {
+      "title"    : "单例模式",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/basis-dp-singleton/",
+      "keywords" : "Basis"
+    } ,
+  
+    {
+      "title"    : "模板方法模式",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/basis-dp-template-method/",
+      "keywords" : "Basis"
+    } ,
+  
+    {
+      "title"    : "设计模式",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/basis-dp/",
+      "keywords" : "Basis"
+    } ,
+  
+    {
+      "title"    : "串口通信",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/basis-hardware-serial-port/",
+      "keywords" : "Basis"
+    } ,
+  
+    {
+      "title"    : "网络",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/basis-network/",
+      "keywords" : "Basis"
+    } ,
+  
+    {
+      "title"    : "面向对象",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/basis-oop/",
+      "keywords" : "Basis"
+    } ,
+  
+    {
+      "title"    : "I/O 模型",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/basis-os-io/",
+      "keywords" : "Basis"
+    } ,
+  
+    {
+      "title"    : "进程",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/basis-os-process/",
+      "keywords" : "Basis"
+    } ,
+  
+    {
+      "title"    : "线程安全与可重入",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/basis-os-thread-safe-and-reentrant/",
+      "keywords" : "Basis"
+    } ,
+  
+    {
+      "title"    : "线程",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/basis-os-thread/",
+      "keywords" : "Basis"
+    } ,
+  
+    {
+      "title"    : "中文文案排版指北（简体中文版）",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/chinese-copywriting-guidelines/",
+      "keywords" : "中文文案排版指北"
+    } ,
+  
+    {
+      "title"    : "Eclipse",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/eclipse/",
+      "keywords" : "Eclipse"
+    } ,
+  
+    {
+      "title"    : "Emacs",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/emacs/",
+      "keywords" : "Emacs, 快捷键"
+    } ,
+  
+    {
+      "title"    : "Excel",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/excel/",
+      "keywords" : "Excel, Office"
+    } ,
+  
+    {
+      "title"    : "Git",
+      "category" : "Git",
+      
+      "url"      : "https://chyblog.cn/wiki/git/",
+      "keywords" : "Git, 版本控制"
+    } ,
+  
+    {
+      "title"    : "GitHub",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/github/",
+      "keywords" : "GitHub"
+    } ,
+  
+    {
+      "title"    : "善用佳软",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/good-soft/",
+      "keywords" : "软件, 推荐"
+    } ,
+  
+    {
+      "title"    : "IDA Pro",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/ida-pro/",
+      "keywords" : "debug, IDA Pro"
+    } ,
+  
+    {
+      "title"    : "IntelliJ IDEA",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/intellij-idea/",
+      "keywords" : "IDEA, Java"
+    } ,
+  
+    {
+      "title"    : "语言基础",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/java-basis/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "内部类",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/java-internal-class/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "JVM",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/java-jvm/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "Maven",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/java-maven/",
+      "keywords" : "Java, Maven"
+    } ,
+  
+    {
+      "title"    : "MyBatis-Plus",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/java-mybatis-plus/",
+      "keywords" : "Java, MyBatis-Plus"
+    } ,
+  
+    {
+      "title"    : "多线程",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/java-threads/",
+      "keywords" : "Android"
+    } ,
+  
+    {
+      "title"    : "开发工具箱",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/java-toolbox/",
+      "keywords" : "Java, 工具箱"
+    } ,
+  
+    {
+      "title"    : "Kindle 屏保图片",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/kindle-screensavers/",
+      "keywords" : "kindle, Screensavers, Paperwhite"
+    } ,
+  
+    {
+      "title"    : "Kindle",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/kindle/",
+      "keywords" : "Kindle"
+    } ,
+  
+    {
+      "title"    : "Linux/Unix",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/linux/",
+      "keywords" : "Linux"
+    } ,
+  
+    {
+      "title"    : "Mac OS X",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/mac/",
+      "keywords" : "Mac"
+    } ,
+  
+    {
+      "title"    : "Markdown Intro",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/markdown-intro/",
+      "keywords" : "markdown"
+    } ,
+  
+    {
+      "title"    : "Markdown",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/markdown/",
+      "keywords" : "Markdown"
+    } ,
+  
+    {
+      "title"    : "MPV",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/mpv/",
+      "keywords" : "mpv"
+    } ,
+  
+    {
+      "title"    : "MySQL",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/mysql/",
+      "keywords" : "MySQL"
+    } ,
+  
+    {
+      "title"    : "OllyDbg",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/ollydbg/",
+      "keywords" : "debug, ollydbg"
+    } ,
+  
+    {
+      "title"    : "OneNote",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/onenote/",
+      "keywords" : "OneNote, GTD"
+    } ,
+  
+    {
+      "title"    : "企业微信",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/open-wxwork/",
+      "keywords" : "企业微信"
+    } ,
+  
+    {
+      "title"    : "PHP",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/php/",
+      "keywords" : "php"
+    } ,
+  
+    {
+      "title"    : "PowerShell",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/powershell/",
+      "keywords" : "Windows, PowerShell"
+    } ,
+  
+    {
+      "title"    : "Python",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/python/",
+      "keywords" : "Python"
+    } ,
+  
+    {
+      "title"    : "Qt Creator",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/qt-creator/",
+      "keywords" : "Qt, Qt Creator"
+    } ,
+  
+    {
+      "title"    : "Scoop",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/scoop/",
+      "keywords" : "scoop, windows"
+    } ,
+  
+    {
+      "title"    : "Skill Tree",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/skill-tree/",
+      "keywords" : "技能树, 思维导图, mindmap, 脑图"
+    } ,
+  
+    {
+      "title"    : "Source Insight",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/source-insight/",
+      "keywords" : "Source Insight"
+    } ,
+  
+    {
+      "title"    : "Swimming",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/swimming/",
+      "keywords" : "游泳, 蛙泳"
+    } ,
+  
+    {
+      "title"    : "Wiki Template",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/template/",
+      "keywords" : "keyword1, keyword2"
+    } ,
+  
+    {
+      "title"    : "Vim",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/vim/",
+      "keywords" : "Vim"
+    } ,
+  
+    {
+      "title"    : "Visio",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/visio/",
+      "keywords" : "Visio"
+    } ,
+  
+    {
+      "title"    : "Visual Studio Code",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/visual-studio-code/",
+      "keywords" : "Visual Studio Code"
+    } ,
+  
+    {
+      "title"    : "Visual Studio",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/visual-studio/",
+      "keywords" : "Visual Studio"
+    } ,
+  
+    {
+      "title"    : "Windows Terminal",
+      "category" : "",
+      
+      "url"      : "https://chyblog.cn/wiki/windows-terminal/",
+      "keywords" : "Windows Terminal"
+    } 
+  
+]
+

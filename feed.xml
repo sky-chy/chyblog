@@ -1,0 +1,1401 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://chyblog.cn/feed.xml" rel="self" type="application/atom+xml" /><link href="https://chyblog.cn/" rel="alternate" type="text/html" /><updated>2022-04-03T09:31:34+00:00</updated><id>https://chyblog.cn/feed.xml</id><title type="html">一切随猿</title><subtitle>不定时分享Windows操作、黑苹果安装和使用、Python、Android、Electron-Vue、Vue、Uni-app和小程序开发的教程或者资源的网站，免费提供一切在教程中出现的资源，也不定时提供一些可玩性比较高的软件</subtitle><entry><title type="html">boundingClientRect重复回调</title><link href="https://chyblog.cn/2021/03/10/get-node-information-repeatedly/" rel="alternate" type="text/html" title="boundingClientRect重复回调" /><published>2021-03-10T00:00:00+00:00</published><updated>2021-03-10T00:00:00+00:00</updated><id>https://chyblog.cn/2021/03/10/get%20node%20information%20repeatedly</id><content type="html" xml:base="https://chyblog.cn/2021/03/10/get-node-information-repeatedly/">&lt;h3 id=&quot;一情景导入&quot;&gt;一、情景导入&lt;/h3&gt;
+&lt;p&gt;近日，博主在自定义组件中使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uni.createSelectorQuery()&lt;/code&gt;这个API去获取节点信息来计算页面控件高度的时候，发现重复获取了一个数据，导致计算的数据不符合预期&lt;/p&gt;
+
+&lt;h3 id=&quot;二关键词&quot;&gt;二、关键词&lt;/h3&gt;
+&lt;p&gt;重复获取&lt;/p&gt;
+
+&lt;h3 id=&quot;三分析思路&quot;&gt;三、分析思路&lt;/h3&gt;
+&lt;p&gt;无&lt;/p&gt;
+
+&lt;h3 id=&quot;四工具环境&quot;&gt;四、工具环境&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;MacOS 10.15.7&lt;/li&gt;
+  &lt;li&gt;HBuilder X 3.1.4.20210305&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;五实现步骤&quot;&gt;五、实现步骤&lt;/h3&gt;
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;contentHeight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+  
+    &lt;span class=&quot;p&quot;&gt;......&lt;/span&gt;
+  
+    &lt;span class=&quot;nx&quot;&gt;mounted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;systemInfo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;uni&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getSystemInfoSync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;contentHeight&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;systemInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;windowHeight&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;// 如果存在多个selector的节点，声明变量后再使用selectAll或者select可能会导致boundingClientRect回调多次&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;uni&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createSelectorQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;selectAll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;.grader-parent&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;boundingClientRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;contentHeight&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;height&lt;/span&gt; 
+      &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;// 如果存在多个selector的节点，又想保证boundingClientRect只回调一次，可以尝试直接链式调用&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;uni&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createSelectorQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;.grader-parent&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;boundingClientRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;contentHeight&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;height&lt;/span&gt; 
+      &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  
+    &lt;span class=&quot;p&quot;&gt;......&lt;/span&gt;
+  
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/script&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;六实操代码&quot;&gt;六、实操代码&lt;/h3&gt;
+&lt;p&gt;无&lt;/p&gt;
+
+&lt;h3 id=&quot;七归纳总结&quot;&gt;七、归纳总结&lt;/h3&gt;
+&lt;p&gt;无&lt;/p&gt;
+
+&lt;h3 id=&quot;八注意事项&quot;&gt;八、注意事项&lt;/h3&gt;
+&lt;p&gt;无&lt;/p&gt;
+
+&lt;h3 id=&quot;九相关资源&quot;&gt;九、相关资源&lt;/h3&gt;
+&lt;p&gt;无&lt;/p&gt;</content><author><name>CHY</name></author><category term="小程序" /><category term="uni-app" /><summary type="html">一、情景导入 近日，博主在自定义组件中使用uni.createSelectorQuery()这个API去获取节点信息来计算页面控件高度的时候，发现重复获取了一个数据，导致计算的数据不符合预期</summary></entry><entry><title type="html">MacBook Pro 双开微信的方法</title><link href="https://chyblog.cn/2021/02/27/macos-open-wechat-more/" rel="alternate" type="text/html" title="MacBook Pro 双开微信的方法" /><published>2021-02-27T00:00:00+00:00</published><updated>2021-02-27T00:00:00+00:00</updated><id>https://chyblog.cn/2021/02/27/macos%20open%20wechat%20more</id><content type="html" xml:base="https://chyblog.cn/2021/02/27/macos-open-wechat-more/">&lt;h3 id=&quot;一情景导入&quot;&gt;一、情景导入&lt;/h3&gt;
+&lt;p&gt;在使用MacBook时，为了方便公私分明，可能会使用到双开微信或者双开QQ功能，那么，macBook系统怎么双开微信或者双开QQ？下面让博主给大家演示一下如何在mac系统中双开微信或者QQ。以微信为例，QQ或者其他应用类似&lt;/p&gt;
+
+&lt;h3 id=&quot;二工具环境&quot;&gt;二、工具环境&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;MacOS 10.15.7&lt;/li&gt;
+  &lt;li&gt;WeChat 2.6.1 (16853)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;三实际操作&quot;&gt;三、实际操作&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;打开访达[Finder]：
+&lt;img src=&quot;/static/images/others/macos open wechat more1.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在应用程序里面找到微信.app并在鼠标右键菜单里面打开包内容：
+&lt;img src=&quot;/static/images/others/macos open wechat more2.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;找到WeChat这个程序：
+&lt;img src=&quot;/static/images/others/macos open wechat more3.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;用终端的方式打开：
+&lt;img src=&quot;/static/images/others/macos open wechat more4.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;现在就可以完美的实现双开微信了：
+&lt;img src=&quot;/static/images/others/macos open wechat more5.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;四注意事项&quot;&gt;四、注意事项&lt;/h3&gt;
+&lt;p&gt;博主尝试过多次使用终端或者复制副本再使用终端来打开多个微信，但实验发现，只有最开始的那个终端有效&lt;/p&gt;
+
+&lt;h3 id=&quot;五相关资源&quot;&gt;五、相关资源&lt;/h3&gt;
+&lt;p&gt;无&lt;/p&gt;</content><author><name>CHY</name></author><category term="MacBook" /><category term="微信" /><summary type="html">一、情景导入 在使用MacBook时，为了方便公私分明，可能会使用到双开微信或者双开QQ功能，那么，macBook系统怎么双开微信或者双开QQ？下面让博主给大家演示一下如何在mac系统中双开微信或者QQ。以微信为例，QQ或者其他应用类似</summary></entry><entry><title type="html">Android 各版本API的基本特性</title><link href="https://chyblog.cn/2021/02/25/basic-features-of-android-sdk/" rel="alternate" type="text/html" title="Android 各版本API的基本特性" /><published>2021-02-25T00:00:00+00:00</published><updated>2021-02-25T00:00:00+00:00</updated><id>https://chyblog.cn/2021/02/25/basic%20features%20of%20android%20sdk</id><content type="html" xml:base="https://chyblog.cn/2021/02/25/basic-features-of-android-sdk/">&lt;h3 id=&quot;一前言&quot;&gt;一、前言&lt;/h3&gt;
+&lt;p&gt;众所周知，Android系统的版本迭代比较快，从2008年9月开始的Android1.0到现在的Android11.0，总共经历了30个版本的Api的迭代，从第23版的Api开始，就对系统进行了大刀阔斧的改革。实话说，从这个版本开始，Google就安全方面有点向苹果看齐了，不过业界大佬的事情，咱门也说不清，只能说，跟着官方走就好了&lt;/p&gt;
+
+&lt;h3 id=&quot;二正文&quot;&gt;二、正文&lt;/h3&gt;
+&lt;p&gt;以下是Android各版本的相关对比：&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Android版本&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Api版本&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;版本信息&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;a href=&quot;https://developer.android.google.cn/about/versions/11&quot;&gt;Android 11.0 R&lt;/a&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;30&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;——&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;a href=&quot;https://developer.android.google.cn/about/versions/10&quot;&gt;Android 10.0 Q&lt;/a&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;29&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;——&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 9.0 Pie&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;28&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、加入了全新的”自适应”电池功能,可以让手机智能判断用户对App的使用情况,并且还可以智能调节CPU的使用,最大限度地降低耗电量(加入人工智能)&lt;br /&gt;2、重新设计系统界面,重绘系统图标,在屏幕底部增加了一个短横符号,其作用相当于原来的Home键.&lt;br /&gt;3、提供了人工智能的API,整合形成”MLKit”.&lt;br /&gt;4、手机支持翻转手机进入免打扰模式.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 8.1 Oreo&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;27&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;——&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 8.0 Oreo&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;26&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、TensorFlow Lite概念；&lt;br /&gt;2、画中画；&lt;br /&gt;3、Notification Dots；&lt;br /&gt;4、智能文本选择（Smart Text Selection）；&lt;br /&gt;5、自动填写（Auto-Fill）；&lt;br /&gt;6、Google Play Protect；&lt;br /&gt;7、系统/应用启动程序加速；&lt;br /&gt;8、Play Console Dashboard &lt;br /&gt;9、Android O中大部分的界面改变都在设置菜单中,整体更加简洁&lt;br /&gt;10、自适应图标,即:桌面图标都是相同的形状&lt;br /&gt;11、后台进程,严格限制了后台进程对手机资源的调用.&lt;br /&gt;12、取消了大部分静态广播注册&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 7.1 Nougat&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;25&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;——&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 7.0 Nougat&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;24&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、多窗口支持,可以指定应用允许的最小尺寸.同时打开两个应用,并且在多窗口模式中,增加了拖拽功能,对于开发者,可以设置Activity允许的最小尺寸,分屏模式(屏幕一分为二)、画中画模式(TV上应用,视频播放窗口一直在最顶层显示)、Freeform模式(应用界面可以自由拖动或者修改大小)&lt;br /&gt;2、增加了JIT编译器,并对ART进行代码分析,使得安装提速并且所占空间减少.&lt;br /&gt;3、对通知进行了许多的增强,消息传递可以自定义,开发者只需要用到MessagingStyle进行配置即可.&lt;br /&gt;4、低耗电模式&lt;br /&gt;5、Android N 引入一项新的应用签名方案 APK Signature Scheme v2,它能提供更快的应用安装时间和更多针对未授权 APK 文件更改的保护.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 6.0 Marshmallow&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;23&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、App Permissions（软件权限管理）。&lt;br /&gt;2、Chrome Custom Tabs（网页体验提升）。&lt;br /&gt;3、App Links（APP关联）。&lt;br /&gt;4、Android Pay（安卓支付）。&lt;br /&gt;5、Fingerprint Support（指纹支持）。&lt;br /&gt;6、Power &amp;amp; Change（电量管理 ）&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 5.1 Lollipop&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;22&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;——&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 5.0 Lollipop&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;21&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、谷歌将为Android的语音服务Google Now加入一个名为OK Google Everywhere的全新功能。&lt;br /&gt;2、Android 5.0可能还会加入更多的健身功能，考虑到谷歌在发布了Android Wear，后者与智能手表及谷歌眼镜等可穿戴设备的协作应该会成为下个版本的重点功能。&lt;br /&gt;3、整合碎片化&lt;br /&gt;4、传言Google将在Android5.0中，禁止厂商进行深度定制。&lt;br /&gt;5、数据迁移&lt;br /&gt;6、独立平板&lt;br /&gt;7、功能按键&lt;br /&gt;8、接口风格&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 4.4.4 KitKat&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;20&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;——&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 4.4 KitKat&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;19&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、优化了RenderScript计算和图像显示,取代OpenCL&lt;br /&gt;2、支持两种编译模式&lt;br /&gt;3、Android 4.4 KitKat针对RAM占用进行了优化，甚至可以在一些仅有512MB RAM的老款手机上流畅运行。&lt;br /&gt;4、新图标、锁屏、启动动画和配色方案&lt;br /&gt;5、新的拨号和智能来电显示&lt;br /&gt;6、加强主动式语音功能&lt;br /&gt;7、集成Hangouts IM软件&lt;br /&gt;8、全屏模式&lt;br /&gt;9、支持Emoji键盘&lt;br /&gt;10、轻松访问在线存储&lt;br /&gt;11、无线打印&lt;br /&gt;12、屏幕录像功能&lt;br /&gt;13、内置字幕管理功能&lt;br /&gt;14、计步器应用&lt;br /&gt;15、低功耗音频和定位模式&lt;br /&gt;16、新的接触式支付系统&lt;br /&gt;17、新的蓝牙配置文件和红外兼容性&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 4.3 Jelly Bean&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;18&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、用户账户配制&lt;br /&gt;2、拨号盘联系人自动补全&lt;br /&gt;3、OpenGL 3.0&lt;br /&gt;4、蓝牙低耗电技术&lt;br /&gt;5、WIFI关闭后保持位置功能&lt;br /&gt;其它特性&lt;br /&gt;新的相机应用UI&lt;br /&gt;新的开发者工具&lt;br /&gt;通过邮件分享截屏时，日期和时间会自动加入进去。&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 4.2 Jelly Bean&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;17&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、完整的Chrome浏览器&lt;br /&gt;2、全新的手机风景模式&lt;br /&gt;3、全新的文件管理器&lt;br /&gt;4、文本输入选项的改进&lt;br /&gt;5、一个明确的升级方法&lt;br /&gt;6、Android Key Lime Pie精简版&lt;br /&gt;7、具有开关切换的用户界面&lt;br /&gt;8、全新的电源管理系统&lt;br /&gt;9、更为轻便的主题模式&lt;br /&gt;10、全新的锁屏页面&lt;br /&gt;11、全新的时钟界面&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 4.1 Jelly Bean&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;16&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1.更快、更流畅、更灵敏&lt;br /&gt;2.增强通知栏&lt;br /&gt;3.全新搜索&lt;br /&gt;4.桌面插件自动调整大小&lt;br /&gt;5.加强无障碍操作&lt;br /&gt;6.语言和输入法扩展&lt;br /&gt;7.新的输入类型和功能&lt;br /&gt;8.新的连接类型&lt;br /&gt;9.新的媒体功能&lt;br /&gt;10.浏览器增强&lt;br /&gt;11.Google服务&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 4.0.3 - 4.0.4 Ice Cream Sandwich&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;15&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;——&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 4.0 - 4.0.2 Ice Cream Sandwich&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;14&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、蓝色主题&lt;br /&gt;2、接近于桌面版的Chrome Lite浏览器，有离线阅读，同步Chrome书签，新的标签样式等。&lt;br /&gt;3、截图功能&lt;br /&gt;4、更强大的图片编辑功能&lt;br /&gt;5、自带照片应用堪比Instagram，可以加滤镜、加相框，进行360度全景拍摄，照片还能根据地点来排序&lt;br /&gt;6、Gmail加入手势、离线搜索功能，UI更强大。&lt;br /&gt;7、新功能People：以联系人照片为核心，界面偏重滑动而非点击，集成了Twitter、Linkedin、Google+等通讯工具。有望支持用户自定义添加第三方服务。&lt;br /&gt;8、新增流量管理工具，可具体查看每个应用产生的流量。&lt;br /&gt;9、正在运行的程序可以像电脑一样的互相切换&lt;br /&gt;10、人脸识别功能&lt;br /&gt;11、系统优化、速度更快&lt;br /&gt;12、支持虚拟按键，手机可以不再拥有任何按键&lt;br /&gt;13、专为3D优化的驱动&lt;br /&gt;14、平板电脑和智能手机通用&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 3.2 Honeycomb&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;13&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、支持7英寸设备&lt;br /&gt;2、引入了应用显示缩放功能&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 3.1 Honeycomb&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;12&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、Honeycomb 蜂巢（改进3.0BUG）&lt;br /&gt;2、经过优化的Gmail电子邮箱；&lt;br /&gt;3、全面支持GoogleMaps&lt;br /&gt;4、将Android手机系统跟平板系统再次合并从而方便开发者。&lt;br /&gt;5、任务管理器可滚动，支持USB 输入设备（键盘、鼠标等）。&lt;br /&gt;6、支持 Google TV、可以支持XBOX 360无线手柄&lt;br /&gt;7、widget支持的变化，能更加容易的定制屏幕widget插件。&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 3.0 Honeycomb&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;11&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、Fragments：较activity粒度小的拥有独自生命周期的模块。可作为acitivity的一部分，activity通过FragmentManager管理独自的fragments back stack。&lt;br /&gt;2、Action Bar：activity顶部标题栏的替代品，通常含logo，点击出现原menu菜单项–称作action item。可与tab、Fragments back stack合用。&lt;br /&gt;3、粘贴版：系统范围的复制、粘贴。通过系统服务CLIPBOARD_SERVICE。&lt;br /&gt;4、Drag and drop：在view中监听drag、drop动作，通过ClipData（与系统粘贴版无关）传递数据。&lt;br /&gt;5、App widgets：支持GridView、ListView、StackView及ViewFlipper。&lt;br /&gt;6、Content loader：Loader类简化异步数据加载；CursorLoader简化ContentProvider的数据加载。&lt;br /&gt;7、动画支持扩展：全新动画框架，更灵活。&lt;br /&gt;8、硬件绘制加速： android:hardwareAccelerated=”true” 启用OpenGl硬件绘制加速。支持renderscript脚本语言。&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 2.3.3-2.3.7 Gingerbread&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;10&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;——&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 2.3 - 2.3.2 Gingerbread&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;9&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、优化针对平板&lt;br /&gt;2、全新设计的UI增强网页浏览功能&lt;br /&gt;3、·n-app purchases功能&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 2.2 - 2.2.3 Froyo&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;8&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、整体性能大幅度的提升&lt;br /&gt;2、3G网络共享功能。&lt;br /&gt;3、Flash的支持。&lt;br /&gt;4、App2sd功能。&lt;br /&gt;5、全新的软件商店。&lt;br /&gt;6、更多的Web应用API接口的开发。&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 2.1 Éclair&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;7&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;——&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 2.0.1 Éclair&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;6&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;——&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 2.0 Éclair&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;5&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、优化硬件速度&lt;br /&gt;2、 “Car Home”程序&lt;br /&gt;3、支持更多的屏幕分辨率&lt;br /&gt;4、改良的用户界面&lt;br /&gt;5、新的浏览器的用户接口和支持HTML5&lt;br /&gt;6、新的联系人名单&lt;br /&gt;7、更好的白色/黑色背景比率&lt;br /&gt;8、改进Google Maps3.1.2&lt;br /&gt;9、支持Microsoft Exchange&lt;br /&gt;10、支持内置相机闪光灯&lt;br /&gt;11、支持数码变焦&lt;br /&gt;12、改进的虚拟键盘&lt;br /&gt;13、支持蓝牙2.1&lt;br /&gt;14、支持动态桌面的设计&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 1.6 Donut&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;4&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、重新设计的Android Market手势&lt;br /&gt;2、支持支持CDMA网络&lt;br /&gt;3、文字转语音系统（Text-to-Speech）&lt;br /&gt;4、快速搜索框&lt;br /&gt;5、全新的拍照接口&lt;br /&gt;6、查看应用程序耗电&lt;br /&gt;7、支持虚拟私人网络（VPN）&lt;br /&gt;8、支持更多的屏幕分辨率。&lt;br /&gt;9、支持OpenCore2媒体引擎&lt;br /&gt;10、新增面向视觉或听觉困难人群的易用性插件&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 1.5 Cupcake&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;3&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1、拍摄/播放影片，并支持上传到Youtube&lt;br /&gt;2、支持立体声蓝牙耳机，同时改善自动配对性能&lt;br /&gt;3、最新的采用WebKit技术的浏览器，支持复制/贴上和页面中搜索&lt;br /&gt;4、GPS性能大大提高&lt;br /&gt;5、提供屏幕虚拟键盘&lt;br /&gt;6、主屏幕增加音乐播放器和相框widgets&lt;br /&gt;7、应用程序自动随着手机旋转&lt;br /&gt;8、短信、Gmail、日暦，浏览器的用户接口大幅改进，如Gmail可以批量删除邮件&lt;br /&gt;9、相机启动速度加快，拍摄图片可以直接上传到Picasa&lt;br /&gt;10、来电照片显示&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 1.1 Petit Four&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;——&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Android 1.0&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2008 年9月发布的Android第一版&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;三注意事项&quot;&gt;三、注意事项&lt;/h3&gt;
+&lt;p&gt;无&lt;/p&gt;
+
+&lt;h3 id=&quot;四相关资源&quot;&gt;四、相关资源&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/djdh/p/10449223.html&quot;&gt;Android的发展历史&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://baike.baidu.com/item/Android%E5%8E%86%E5%8F%B2%E7%89%88%E6%9C%AC/1578450&quot;&gt;Android历史版本&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/pkorochi/article/details/104495274&quot;&gt;Android各版本特性&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/WuLex/article/details/83651107&quot;&gt;android api各个版本特性简单描述到6.0&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/xiangzhihong8/article/details/88108825&quot;&gt;Android 10系统新特性解读&lt;/a&gt;&lt;/p&gt;</content><author><name>CHY</name></author><category term="Android" /><category term="SDK" /><summary type="html">一、前言 众所周知，Android系统的版本迭代比较快，从2008年9月开始的Android1.0到现在的Android11.0，总共经历了30个版本的Api的迭代，从第23版的Api开始，就对系统进行了大刀阔斧的改革。实话说，从这个版本开始，Google就安全方面有点向苹果看齐了，不过业界大佬的事情，咱门也说不清，只能说，跟着官方走就好了</summary></entry><entry><title type="html">Android的三种动画的对比</title><link href="https://chyblog.cn/2021/02/24/android-animation-detailed/" rel="alternate" type="text/html" title="Android的三种动画的对比" /><published>2021-02-24T00:00:00+00:00</published><updated>2021-02-24T00:00:00+00:00</updated><id>https://chyblog.cn/2021/02/24/android%20animation%20detailed</id><content type="html" xml:base="https://chyblog.cn/2021/02/24/android-animation-detailed/">&lt;h3 id=&quot;一前言&quot;&gt;一、前言&lt;/h3&gt;
+&lt;p&gt;在日常的Android开发中，经常会使用到动画，这里就对Android开发中的动画做一下总结&lt;/p&gt;
+
+&lt;h3 id=&quot;二正文&quot;&gt;二、正文&lt;/h3&gt;
+&lt;p&gt;Android系统提供了很多丰富的API去实现UI的2D与3D动画，最主要的划分可以分为如下几类：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;视图动画(补间动画，View Animation)，在古老的Android版本系统中就已经提供了，只能被用来设置View的动画：&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;特性：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;渐变动画支持四种类型：平移（Translate）、旋转（Rotate）、缩放（Scale）、不透明度&lt;/li&gt;
+        &lt;li&gt;只是显示的位置变动，View的实际位置未改变，表现为View移动到其他地方，点击事件仍在原处&lt;/li&gt;
+        &lt;li&gt;组合使用步骤较复杂&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;优点：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;相对于逐帧动画来说，补间动画更为连贯自然&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;缺点：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;当平移动画执行完停在最后的位置，结果焦点还在原来的位置(控件的属性没有真的被改变)&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;帧动画(Frame动画，Drawable Animation)，其实可以划分到视图动画的类别，专门用来一个一个的显示Drawable的resources，就像放幻灯片一样：&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;特性：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;用于生成连续的Gif效果图。&lt;/li&gt;
+        &lt;li&gt;DrawableAnimation也是指此动画&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;优点:&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;制作简单&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;缺点：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;效果单一，逐帧播放需要很多图片，占用空间较大&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;属性动画(Property Animation)，只对Android 3.0（API 11）以上版本的Android系统才有效，这种动画可以设置给任何Object，包括那些还没有渲染到屏幕上的对象。这种动画是可扩展的，可以让你自定义任何类型和属性的动画：&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;特性：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;支持对所有View能更新的属性的动画（需要属性的setXxx()和getXxx()）。&lt;/li&gt;
+        &lt;li&gt;更改的是View实际的属性，所以不会影响其在动画执行后所在位置的正常使用。&lt;/li&gt;
+        &lt;li&gt;Android3.0（API11）及以后出现的功能，3.0之前的版本可使用github第三方开源库nineoldandroids.jar进行支持。&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;优点：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;易定制，效果强&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;缺点：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;(3.0+API出现)向下兼容问题&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;属性动画，顾名思义直接是改变的控件的属性。仔细的同学可能会发现：在补间动画中即使他的位置发生了变化，但是他的诸如 点击事件，监听 ，都还停留在原地，不会跟着控件位置的变化去跟着改变。属性动画最大的特点就是 保留了这些监听之类的属性，即使位置发生变化也不会影响它的使用。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;三注意事项&quot;&gt;三、注意事项&lt;/h3&gt;
+&lt;p&gt;注意属性动画的兼容性&lt;/p&gt;
+
+&lt;h3 id=&quot;四相关资源&quot;&gt;四、相关资源&lt;/h3&gt;
+&lt;p&gt;无&lt;/p&gt;</content><author><name>CHY</name></author><category term="Android" /><category term="动画" /><summary type="html">一、前言 在日常的Android开发中，经常会使用到动画，这里就对Android开发中的动画做一下总结</summary></entry><entry><title type="html">Python3对文件的3种归档或者压缩打包方法</title><link href="https://chyblog.cn/2021/02/21/three-methods-of-filing-or-compressing-files/" rel="alternate" type="text/html" title="Python3对文件的3种归档或者压缩打包方法" /><published>2021-02-21T00:00:00+00:00</published><updated>2021-02-21T00:00:00+00:00</updated><id>https://chyblog.cn/2021/02/21/three%20methods%20of%20filing%20or%20compressing%20files</id><content type="html" xml:base="https://chyblog.cn/2021/02/21/three-methods-of-filing-or-compressing-files/">&lt;h3 id=&quot;一情景导入&quot;&gt;一、情景导入&lt;/h3&gt;
+&lt;p&gt;朋友说手上有很多文件需要快速实现归档或者压缩，并且有些文件还需要加入密码保护的，如果靠自己一个一个文件进行归档或者压缩，不知道要到什么时候才能完成，人工和时间成本相对较高，问我有没有什么办法可以实现大量文件快速压缩，同时还能设定是否开启密码保护功能，话不多说，搞起！&lt;/p&gt;
+
+&lt;h3 id=&quot;二关键词&quot;&gt;二、关键词&lt;/h3&gt;
+&lt;p&gt;大量文件、归档、压缩、密码保护、成本&lt;/p&gt;
+
+&lt;h3 id=&quot;三分析思路&quot;&gt;三、分析思路&lt;/h3&gt;
+&lt;p&gt;根据上述情景和关键词得知，需用实现对多个文件进行自动化归档或者压缩打包&lt;/p&gt;
+
+&lt;h3 id=&quot;四工具环境&quot;&gt;四、工具环境&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Python 3.7.0&lt;/li&gt;
+  &lt;li&gt;py7zr 0.13.0&lt;/li&gt;
+  &lt;li&gt;PyCharm 2019.1.2&lt;/li&gt;
+  &lt;li&gt;MacOS 10.15.7&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;五实现步骤&quot;&gt;五、实现步骤&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;首选获取到源文件的路径，假设源文件的路径变量为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file_paths&lt;/code&gt;;&lt;/li&gt;
+  &lt;li&gt;之后使用ThreadPoolExecutor来创建线程池，并对每个文件进行独立线程操作，假设线程池的变量为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;executor&lt;/code&gt;；&lt;/li&gt;
+  &lt;li&gt;创建归档后的目标文件夹&lt;/li&gt;
+  &lt;li&gt;开始[加密]归档文件到目标文件夹&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;六实操代码&quot;&gt;六、实操代码&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;第1种方法，使用zipfile模块&lt;/p&gt;
+
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# -*- coding:utf8 -*-
+&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;zipfile&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;concurrent.futures.thread&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ThreadPoolExecutor&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ZipFileUtil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resource_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'/Users/chenhongye/Documents/Resource'&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 源文件的父目录，需要指定自己的路径，可全部覆盖重写
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'/Users/chenhongye/Documents/Target'&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 归档或打包压缩后的目录，需要指定自己的路径，可全部覆盖重写
+&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_paths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 所有源文件路径
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ThreadPoolExecutor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 创建容量为10 的线程池
+&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# 初始化
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# 创建保存目录
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exists&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mkdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# 获取所有源文件路径
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__get_file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;file_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;listdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resource_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_paths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resource_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;video_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;video_name&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# zipfile模块打包归档，只支持设置提取密码
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;zip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;file_base_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;splitext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zipfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ZipFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_base_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.zip'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'w'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# 主入口
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__get_file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;# 启动线程池
+&lt;/span&gt;            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;zip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_paths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;的操作&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;成功&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;失败&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'已完成全部操作，程序结束'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shutdown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'__main__'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ZipFileUtil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;第2种方法，使用系统命令&lt;/p&gt;
+
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# -*- coding:utf8 -*-
+&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;zipfile&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;concurrent.futures.thread&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ThreadPoolExecutor&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;itertools&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repeat&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ZipFileUtil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resource_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'/Users/chenhongye/Documents/Resource'&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 源文件的父目录，需要指定自己的路径，可全部覆盖重写
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'/Users/chenhongye/Documents/Target'&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 归档或打包压缩后的目录，需要指定自己的路径，可全部覆盖重写
+&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_paths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 所有源文件路径
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ThreadPoolExecutor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 创建容量为10 的线程池
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# 初始化
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# 创建保存目录
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exists&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mkdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# 获取所有源文件路径
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__get_file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;file_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;listdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resource_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_paths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resource_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;video_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;video_name&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# cmd命令打包归档，支持归档密码
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;cmd_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;file_base_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;splitext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;out_full_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_base_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'zip -j -P &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; &quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_full_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.zip&quot; &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'zip -j &quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_full_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.zip&quot; &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;system&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# 主入口
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__get_file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;# 启动线程池
+&lt;/span&gt;            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cmd_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_paths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repeat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'123456'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;的操作&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;成功&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;失败&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'已完成全部操作，程序结束'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shutdown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'__main__'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ZipFileUtil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;第3种方法，使用py7zr模块，需要另外安装&lt;/p&gt;
+
+    &lt;p&gt;在终端上面执行以下命令安装py7zr模块&lt;/p&gt;
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;pip&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;py7zr&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# -*- coding:utf8 -*-
+&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;zipfile&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;concurrent.futures.thread&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ThreadPoolExecutor&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;itertools&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repeat&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;py7zr&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ZipFileUtil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resource_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'/Users/chenhongye/Documents/Resource'&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 源文件的父目录，需要指定自己的路径，可全部覆盖重写
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'/Users/chenhongye/Documents/Target'&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 归档或打包压缩后的目录，需要指定自己的路径，可全部覆盖重写
+&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_paths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 所有源文件路径
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ThreadPoolExecutor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 创建容量为10 的线程池
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# 初始化
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# 创建保存目录
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exists&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mkdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# 获取所有源文件路径
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__get_file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;file_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;listdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resource_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_paths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resource_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;video_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;video_name&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# py7zr模块打包归档，支持密码
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;py7z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;file_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;file_base_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;splitext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;out_full_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_base_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.7z'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;py7zr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SevenZipFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_full_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'w'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;archive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;archive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;writeall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;py7zr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SevenZipFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_full_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'w'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;archive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;archive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;writeall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# 主入口
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__get_file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;# 启动线程池
+&lt;/span&gt;            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;py7z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_paths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repeat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'123456'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;的操作&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;成功&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;失败&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'已完成全部操作，程序结束'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shutdown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'__main__'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ZipFileUtil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;七归纳总结&quot;&gt;七、归纳总结&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;遇到一个问题，需要学会举一反三去思考来解决它，博主始终相信一句话，问题既然是人类产生的，人类就肯定可以解决，只是时间的问题而已；不过，本文恰好用了三种办法去解决一个小问题，虽然有点小瑕疵，但是总体过得去&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;zipfile模块和系统命令都是Python3自带的，不需要额外安装，负责调用即可&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;本文继续使用线程池技术去进行多线程操作多个文件&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;文中涉及的zipfile、py7zr模块还有更多的用法等待挖掘&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;八注意事项&quot;&gt;八、注意事项&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;zipfile模块归档文件，会一起把相关路径打包进去，可能是博主知识浅薄，还不知道怎么去掉这个路径，这个等有空再研究了&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;执行cmd命令，注意文件路径如果有空格的，记得用“”包裹着，或者把空格转反斜杠+空格，例如&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\ &lt;/code&gt;，例如 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;/Users/public/Documents/Resource/a file.txt&quot;&lt;/code&gt;，或者 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Users/public/Documents/Resource/a\ file.txt&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Python3自带的zipfile不支持设置密码压缩，但是支持设置密码来解压，其他两个均支持设置密码加解压&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;使用线程池技术为大量文件操作开启多个独立的工作流程&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;线程池map方法传多个参数的时候，需要保证参数的类型和数量保持一致&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;九相关资源&quot;&gt;九、相关资源&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.python.org/zh-cn/3.7/library/zipfile.html&quot;&gt;Python3 zipfile模块的文档&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/lesten/p/11603998.html&quot;&gt;系统zip命令的常用参数介绍&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/miurahr/py7zr&quot;&gt;py7zr模块的官网&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/static/files/python/ZipFileUtil.py&quot;&gt;ZipFileUtil.py文件下载&lt;/a&gt;&lt;/p&gt;</content><author><name>CHY</name></author><category term="Python3" /><summary type="html">一、情景导入 朋友说手上有很多文件需要快速实现归档或者压缩，并且有些文件还需要加入密码保护的，如果靠自己一个一个文件进行归档或者压缩，不知道要到什么时候才能完成，人工和时间成本相对较高，问我有没有什么办法可以实现大量文件快速压缩，同时还能设定是否开启密码保护功能，话不多说，搞起！</summary></entry><entry><title type="html">使用opencv-python对视频进行指定帧画面保存</title><link href="https://chyblog.cn/2021/02/20/save-the-video-frame/" rel="alternate" type="text/html" title="使用opencv-python对视频进行指定帧画面保存" /><published>2021-02-20T00:00:00+00:00</published><updated>2021-02-20T00:00:00+00:00</updated><id>https://chyblog.cn/2021/02/20/save%20the%20video%20frame</id><content type="html" xml:base="https://chyblog.cn/2021/02/20/save-the-video-frame/">&lt;h3 id=&quot;一情景导入&quot;&gt;一、情景导入&lt;/h3&gt;
+&lt;p&gt;最近我有位搞短视频的朋友跟我说，他上传视频到短视频平台，最后选择封面的时候，感觉那些平台给出来的截图有点鸡肋，但是又不想自己去看完视频来截取封面图片，问问我有没有什么办法可以让多个视频快速产生多张图片，最好是随机产生的，还需要可以自由控制生成数量的，话不多说，搞起！&lt;/p&gt;
+
+&lt;h3 id=&quot;二关键词&quot;&gt;二、关键词&lt;/h3&gt;
+&lt;p&gt;多个视频、随机产生、多张图片、快速、数量&lt;/p&gt;
+
+&lt;h3 id=&quot;三分析思路&quot;&gt;三、分析思路&lt;/h3&gt;
+&lt;p&gt;众所周知，视频是由一帧一帧的图片组合而成的，根据上述情景和关键词得知，需要对多个视频进行多张随机指定帧位置的画面来保存，所以得对源视频进行总帧数获取，在视频总帧数的前提下创建随机帧位置数值的数组，对视频进行帧画面判断是否在集合中，如果在随机帧位置数值的集合中，则保存下来。同时也有要求多个视频快速截取，所以得使用多线程技术&lt;/p&gt;
+
+&lt;h3 id=&quot;四工具环境&quot;&gt;四、工具环境&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Python 3.7.0&lt;/li&gt;
+  &lt;li&gt;opencv-python 4.5.1.48&lt;/li&gt;
+  &lt;li&gt;PyCharm 2019.1.2&lt;/li&gt;
+  &lt;li&gt;MacOS 10.15.7&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;五实现步骤&quot;&gt;五、实现步骤&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;首先获取到视频的路径，假设源视频的路径的变量为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;video_paths&lt;/code&gt;;&lt;/li&gt;
+  &lt;li&gt;之后使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ThreadPoolExecutor&lt;/code&gt;来创建线程池，并对每个视频进行独立线程操作，假设线程池的变量为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;executor&lt;/code&gt;；&lt;/li&gt;
+  &lt;li&gt;创建归档后的目标文件夹&lt;/li&gt;
+  &lt;li&gt;之后使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;opencv-python&lt;/code&gt;模块的获取源视频总帧数，假设源视频总帧数的变量为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;video_frame_sum&lt;/code&gt;;&lt;/li&gt;
+  &lt;li&gt;之后使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;random&lt;/code&gt;模块在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;video_frame_sum&lt;/code&gt;的基础上去获取指定数量的随机数的数组，假设指定数量的变量为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;random_num&lt;/code&gt;，生成&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;random_num&lt;/code&gt;个随机数并整合到数组的变量为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;frame_position&lt;/code&gt;;&lt;/li&gt;
+  &lt;li&gt;之后使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;opencv-python&lt;/code&gt;模块对源视频进行帧位置判断是否在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;frame_position&lt;/code&gt;这个数组中，如果成立，便将该帧画面保存到硬盘;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;六实操代码&quot;&gt;六、实操代码&lt;/h3&gt;
+
+&lt;p&gt;在终端上面执行以下命令安装opencv-python模块&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;pip&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;opencv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;python&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# -*- coding:utf8 -*-
+&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;random&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;cv2&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;concurrent.futures.thread&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ThreadPoolExecutor&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CaptureUtil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# 初始化
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resource_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'/Users/你的用户名/Documents/Resource'&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 视频的父目录，需要指定自己的路径，可全部覆盖重写
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'/Users/你的用户名/Documents/Target'&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 保存帧画面的目录，需要指定自己的路径，可全部覆盖重写
+&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;video_paths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 所有源视频路径
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ThreadPoolExecutor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 创建容量为10 的线程池
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random_num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 指定获取帧画面的数量
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quality&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;70&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 保存jpg格式帧画面的质量，数值越高，质量越好，范围1-99
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# 初始化
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# 创建保存帧画面的目录
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exists&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mkdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# 获取源视频路径
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__get_video_paths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;video_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;listdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resource_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;video_paths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resource_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;video_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;video_name&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;video_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# 获取视频总帧数
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__get_video_frame_sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;capture&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;VideoCapture&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capture&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isOpened&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;video_frame_sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capture&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CAP_PROP_FRAME_COUNT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 视频文件的帧数
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__capture_video&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;capture&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;video_frame_sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# 对视频进行随机抽帧
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__capture_video&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capture&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;video_frame_sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;frame_num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 以获取的帧画面数量
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;frame_index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 帧画面迭代位置
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;frame_position&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;video_frame_sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random_num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 需要获取的随机帧位置
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;file_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;splitext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 文件名称
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'正在对&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;查找需要保持的帧画面...'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capture&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;success&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frame_num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random_num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
+
+            &lt;span class=&quot;n&quot;&gt;frame_index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frame_index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frame_position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;saved_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sep&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frame_index&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.jpg'&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'正在保存&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;saved_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;saved_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;saved_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;saved_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IMWRITE_JPEG_QUALITY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quality&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;frame_num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;capture&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;release&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# 主入口
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__get_video_paths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;# 启动线程池
+&lt;/span&gt;            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__get_video_frame_sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;video_paths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;的抽帧操作&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;成功&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;失败&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'已完成全部操作，程序结束'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shutdown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'__main__'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;CaptureUtil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;七归纳总结&quot;&gt;七、归纳总结&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;从Python3.2开始，标准库为我们提供了concurrent.futures模块，它提供了ThreadPoolExecutor和ProcessPoolExecutor两个类，实现了对threading和multiprocessing的进一步抽象（这里主要关注线程池），不仅可以帮我们自动调度线程，还可以做到：&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;主线程可以获取某一个线程（或者任务的）的状态，以及返回值；&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;当一个线程完成的时候，主线程能够立即知道；&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;让多线程和多进程的编码接口一致；&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;本文使用map函数来进行线程池操作，最终结果是按顺序返回的，此非硬性要求；&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;opencv是一个强大的图像处理和计算机视觉库，opencv-python是opencv的一个Python分支：&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;启动线程池后，每个线程均会独立操作一个视频，代码如下：&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# 启动线程池
+&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__get_video_frame_sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;video_paths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;先使用VideoCapture函数加载相关路径的源视频，代码如下：&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;capture&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;VideoCapture&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;再去获取该视频的总帧数，代码如下：&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;video_frame_sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capture&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CAP_PROP_FRAME_COUNT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 视频文件的帧数
+&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;之后在无限循环中找到需要保存的帧画面位置&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;最后使用imwrite函数对找到的帧画面进行保存，代码如下：&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;saved_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IMWRITE_JPEG_QUALITY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quality&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;os模块相关操作：&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;os.path.exists 是判断一个路径是否存在，需要绝对路径&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;os.mkdir 是创建目录，需要绝对路径&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;os.path.join 是拼接一个或多个路径部分&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;os.path.basename 是获取路径下的文件名称&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;更多说明，请参考&lt;a href=&quot;#九相关资源&quot;&gt;相关资源&lt;/a&gt;的Python3 os.path模块文档&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;random模块产生一个数组的随机数：&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;使用randint函数结合for循环产生指定数量内的数值，代码如下：&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;frame_position&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;video_frame_sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random_num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 需要获取的随机帧位置
+&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;八注意事项&quot;&gt;八、注意事项&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;安装库时别混淆python-opencv2和opencv-python两个库&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;使用opencv-python库时，注意是导入cv2 ，代码：&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;import cv2&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;九相关资源&quot;&gt;九、相关资源&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.python.org/zh-cn/3.7/library/os.path.html&quot;&gt;Python3 os.path模块文档&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/static/files/python/CaptureUtil.py&quot;&gt;CaptureUtil.py文件下载&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="Python3" /><category term="opencv-python" /><summary type="html">一、情景导入 最近我有位搞短视频的朋友跟我说，他上传视频到短视频平台，最后选择封面的时候，感觉那些平台给出来的截图有点鸡肋，但是又不想自己去看完视频来截取封面图片，问问我有没有什么办法可以让多个视频快速产生多张图片，最好是随机产生的，还需要可以自由控制生成数量的，话不多说，搞起！</summary></entry><entry><title type="html">Android四大组件以及相关用法——Activity</title><link href="https://chyblog.cn/2021/01/24/components-of-android-activity/" rel="alternate" type="text/html" title="Android四大组件以及相关用法——Activity" /><published>2021-01-24T00:00:00+00:00</published><updated>2021-01-24T00:00:00+00:00</updated><id>https://chyblog.cn/2021/01/24/components%20of%20android-activity</id><content type="html" xml:base="https://chyblog.cn/2021/01/24/components-of-android-activity/">&lt;h3 id=&quot;一前言&quot;&gt;一、前言&lt;/h3&gt;
+&lt;p&gt;对于学习Android开发知识的人来说，得从Android四大组件学起；Android的四大组件就是基础之一，其次还有五大储存、六大布局，把这些基础研究透了，Android开发的也就信手拈来了
+学习四大组件，建议先从Activity开始，因为这个是在Android应用里面最常见的一个组件，本文只介绍Activity，话不多说，搞起！&lt;/p&gt;
+
+&lt;h3 id=&quot;二正文&quot;&gt;二、正文&lt;/h3&gt;
+&lt;p&gt;&lt;span style=&quot;color:red;font-weight:bold&quot;&gt;Activity&lt;/span&gt;：通常就代表手机中屏幕中能够与用户交互的一些界面，一个Activity通常就是一个独立的窗口，在我们日常开发中使用Activity最多，并且Activity是以任务栈的机制去执行，即“后进先出”的结构，举个例子，若我们在不修改启动模式的情况下多次启动同一个Activity。系统会创建多个实例依次放入任务栈中。当按返回键返回时，每按一次，一个Activity出栈，直到栈空为止。当栈中无任何Activity时，系统就会回收此任务栈。&lt;/p&gt;
+
+&lt;p&gt;以下是在Activity的开发过程中会经常接触的一些知识：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Activity生命周期都有哪些？每个生命周期都负责什么？&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;/static/images/android/activity life cycle.webp&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;onCreate()：不可见状态。第一次创建时调用，创建视图，并且能传递该Activity的上一个状态的Bundle参数。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;onStart()：可见状态，可以显示Activity界面，但此时不能与用户交互。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;onResume()：可见状态，当前界面可以进行交互。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;onPause()：可见状态，此时Activity正在停止，接下来会调用onStop()。在onPause()中可以进行一些数据存储、动画停止、资源回收等。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;onStop()：不可见状态，当前Activity停止或者被完全覆盖，当前Activity不可见，运行在后台。可以做一些资源释放的操作，不能做太耗时的操作。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;onRestart()：在Activity重新启动时调用，由不可见状态变为可见状态。一般打开一个新的Activity在返回之前的Activity，旧的Activity会调用该生命周期。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;onDestory()：Activity销毁。一般可以做一些回收工作和最终资源释放。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;Activity生命周期的一些例子：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;当Activity正常启动：onCreat➜onStart➜onResume&lt;/li&gt;
+        &lt;li&gt;当Activity正常退出：onPause➜onStop➜onDestory&lt;/li&gt;
+        &lt;li&gt;当Activity横竖屏切换：
+          &lt;ul&gt;
+            &lt;li&gt;在Manifest.xml没有设置android:configChanges属性
+              &lt;ul&gt;
+                &lt;li&gt;启动：onCreat➜onStart➜onResume&lt;/li&gt;
+                &lt;li&gt;切换横屏：onSavedInstance➜onPause➜onStop➜onDestory➜onCreate➜onStart➜onRestoreInstanceState➜onResume&lt;/li&gt;
+                &lt;li&gt;从横屏切换成竖屏：onSavedInstance➜onPause➜onStop➜onDestory➜onCreate➜onStart➜onRestoreInstanceState➜onResume➜onSavedInstance➜onPause➜onStop➜onDestory➜onCreate➜onStart➜onRestoreInstanceState➜onResume(会重新创建两次)&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/li&gt;
+            &lt;li&gt;在Manifest.xml中设置了android:configChanges=“orientation”属性
+              &lt;ul&gt;
+                &lt;li&gt;启动：onCreate➜onStart➜onResume&lt;/li&gt;
+                &lt;li&gt;切换横竖屏：onSavedInstanceState➜onPause➜onStop➜onDestory➜onCreate➜onStart➜onRestoreInstanceState➜onResume&lt;/li&gt;
+                &lt;li&gt;在从横屏切换回竖屏：onSavedInsatnceState➜onPause➜onStop➜onDestpry➜onCreate➜onStart➜onRestoreInstanceState➜onResume➜onConfigurationChanged&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/li&gt;
+            &lt;li&gt;在Manifest.xml中设置android:configChanges=”orientation | screenSize | keyboardHidden”
+              &lt;ul&gt;
+                &lt;li&gt;进行横屏切换：只会调用一次onConrigurationChanged&lt;/li&gt;
+                &lt;li&gt;从横屏切换回竖屏：onConfigurationChanged➜onConfigurationChanged&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+        &lt;li&gt;当ActivityA跳转ActivityB，再按下back返回:
+          &lt;ul&gt;
+            &lt;li&gt;ActivityA：onCreate➜onStart➜onResume➜onPause&lt;/li&gt;
+            &lt;li&gt;ActivityB：onCreate➜onStart➜onResume&lt;/li&gt;
+            &lt;li&gt;ActivityA：onStop&lt;/li&gt;
+            &lt;li&gt;当按下返回键&lt;/li&gt;
+            &lt;li&gt;ActivityB：onPause&lt;/li&gt;
+            &lt;li&gt;ActivityA：onRestart➜onStart➜onResume&lt;/li&gt;
+            &lt;li&gt;ActivityB：onStop➜onDestory&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Activity启动模式都有哪些？每个启动模式都有何特点？该如何使用？&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;/static/images/android/activity start mode.png&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;Standard 标准模式，也是默认模式：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Android创建Activity时的默认模式，永远不会调用onNewIntent()。假设没有为Activity设置启动模式的话，默觉得标准模式。每次启动一个Activity都会又一次创建一个新的实例入栈，无论这个实例是否存在。&lt;/li&gt;
+        &lt;li&gt;应用场景：最为普通的模式，需要注意的是，这个模式下启动Activity会不断产生新的栈&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;SingleTop 栈顶复用模式&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;分两种处理情况：须要创建的Activity已经处于栈顶时，此时会直接复用栈顶的Activity。不会再创建新的Activity；若须要创建的Activity不处于栈顶，此时会又一次创建一个新的Activity入栈，同Standard模式一样。&lt;/li&gt;
+        &lt;li&gt;应用场景：假设你在当前的Activity中又要启动同类型的Activity，此时建议将此类型Activity的启动模式指定为SingleTop，能够降低Activity的创建，节省内存！例如推送消息的展示页。&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;SingleTask 栈内复用模式&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;若需要创建的Activity已经处于栈中时，此时不会创建新的Activity，而是将存在栈中的Activity上面的其他Activity所有销毁，使它成为栈顶。&lt;/li&gt;
+        &lt;li&gt;应用场景：最常见的应用场景就是保持我们应用开启后仅仅有一个Activity的实例。最典型的样例就是应用中展示的主页（Home页）。假设用户在主页跳转到其他页面，运行多次操作后想返回到主页，假设不使用SingleTask模式，在点击返回的过程中会多次看到主页，这明显就是设计不合理了。&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;SingleInstance 单实例模式&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;SingleInstance比較特殊，是全局单例模式，是一种加强的SingleTask模式。它除了具有它所有特性外，还加强了一点：具有此模式的Activity仅仅能单独位于一个任务栈中。&lt;/li&gt;
+        &lt;li&gt;应用场景：由于该启动模式会重新创建一个任务栈，所以一般适合启动与程序分离的页面。例如跳转到拨打电话页面或者打开其他应用程序（打开地图App、分享等）&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;Activity启动模式的使用方式：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;在AndroidManifest.xml中指定Activity启动模式，例如：
+          &lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;...
+ &lt;span class=&quot;nt&quot;&gt;&amp;lt;activity&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;android:name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;com.chy.test.MainActivity&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;android:launchMode=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;singleTask&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;          &lt;/div&gt;
+        &lt;/li&gt;
+        &lt;li&gt;启动Activity时，在Intent中指定启动模式去创建Activity，一种动态的启动模式，在new 一个Intent后，通过Intent的addFlags方法去动态指定一个启动模式，例如：
+          &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Intent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setClass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MainActivity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addFlags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;FLAG_ACTIVITY_NEW_TASK&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;startActivity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;          &lt;/div&gt;
+        &lt;/li&gt;
+        &lt;li&gt;以上两种方式都能够为Activity指定启动模式，可是二者还是有差别的。
+          &lt;ul&gt;
+            &lt;li&gt;优先级：后者比前者的优先级要高，若两者同在时，以后者为准。&lt;/li&gt;
+            &lt;li&gt;限定范围：前者无法为Activity直接指定 FLAG_ACTIVITY_CLEAR_TOP 标识，后者无法为Activity指定 singleInstance 模式。&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;复用Activity生命周期回调：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;一般我们在携带参数跳转时不能将启动模式设置为SingleTop或者SingleTask。因为回复用原来的Activity，在复用的时候不会再去执行onCreate，只有在第一次创建时才会调用onCreate。此时会有一个onNewIntent方法，在Activity实例被复用的时候都会执行该方法，我们可以在该方法中会传入最新的intent，就可以解决上面的问题。一般在该方法中都会重新setIntent并初始化数据等。例如：
+          &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+ &lt;span class=&quot;kd&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onNewIntent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Intent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onNewIntent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;setIntent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;intent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;initData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;initView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;          &lt;/div&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;三注意事项&quot;&gt;三、注意事项&lt;/h3&gt;
+&lt;p&gt;无&lt;/p&gt;
+
+&lt;h3 id=&quot;四相关资源&quot;&gt;四、相关资源&lt;/h3&gt;
+&lt;p&gt;无&lt;/p&gt;</content><author><name></name></author><category term="Android" /><category term="四大组件" /><summary type="html">一、前言 对于学习Android开发知识的人来说，得从Android四大组件学起；Android的四大组件就是基础之一，其次还有五大储存、六大布局，把这些基础研究透了，Android开发的也就信手拈来了 学习四大组件，建议先从Activity开始，因为这个是在Android应用里面最常见的一个组件，本文只介绍Activity，话不多说，搞起！</summary></entry><entry><title type="html">Android四大组件以及相关用法——Broadcast</title><link href="https://chyblog.cn/2021/01/24/components-of-android-broadcast/" rel="alternate" type="text/html" title="Android四大组件以及相关用法——Broadcast" /><published>2021-01-24T00:00:00+00:00</published><updated>2021-01-24T00:00:00+00:00</updated><id>https://chyblog.cn/2021/01/24/components%20of%20android-broadcast</id><content type="html" xml:base="https://chyblog.cn/2021/01/24/components-of-android-broadcast/">&lt;h3 id=&quot;一前言&quot;&gt;一、前言&lt;/h3&gt;
+&lt;p&gt;对于学习Android开发知识的人来说，得从Android四大组件学起；Android的四大组件就是基础之一，其次还有五大储存、六大布局，把这些基础研究透了，Android开发的也就信手拈来了
+学习四大组件，建议先从&lt;a href=&quot;/2021/01/24/components-of-android-activity/&quot;&gt;Activity&lt;/a&gt;开始，因为这个是在Android应用里面最常见的一个组件，之后是&lt;a href=&quot;/2021/01/24/components-of-android-server/&quot;&gt;Server&lt;/a&gt;，其次是Broadcast，本文只介绍Broadcast，话不多说，搞起！&lt;/p&gt;
+
+&lt;h3 id=&quot;二正文&quot;&gt;二、正文&lt;/h3&gt;
+&lt;p&gt;&lt;span style=&quot;color:red;font-weight:bold&quot;&gt;Broadcast&lt;/span&gt;：中文名为广播，是四大组件之一，主要用于接受APP发送的广播，内部通信实现机制：自定义广播接收者BroadcastReceiver，并复写onRecvice方法；通过android系统的Binder机制向AMS（Activity Manager Service）进行注册；广播发送者通过Binder机制向AMS发送广播；AMS查找符合条件的（IntentFilter/Permission等）的BroadcastReceiver，将广播发送到BroadcastReceiver(一般情况下是Activity)相应的消息循环队列中；消息循环执行拿到此广播，回调BroadcastReceiver 中的onReceiver()方法&lt;/p&gt;
+
+&lt;p&gt;以下是在Broadcast的开发过程中会经常接触的一些知识：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;广播的应用场景是什么？&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;同一个App中不同组件之间的消息通信。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;不同App组件之间传递消息。&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;有哪几种广播？分别有什么区别？&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;按照注册方式分为：静态广播和动态广播&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;静态广播：在Manifest.xml中通过&lt;receiver&gt;&lt;/receiver&gt;进行注册的广播，例如：
+          &lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ...
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;receiver&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;android:name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.broadcast.CommonBroadcastReceiver&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;intent-filter&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 关机广播 --&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;action&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;android:name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;android.intent.action.ACTION_SHUTDOWN&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/intent-filter&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/receiver&amp;gt;&lt;/span&gt;
+  ...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;          &lt;/div&gt;
+        &lt;/li&gt;
+        &lt;li&gt;动态广播：通过context.registerReceiver显示注册的广播，例如
+          &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nc&quot;&gt;IntentFilter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;intentFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;IntentFilter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;intentFilter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;android.intent.action.ACTION_SHUTDOWN&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;registerReceiver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CommonBroadcastReceiver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;intentFilter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;          &lt;/div&gt;
+        &lt;/li&gt;
+        &lt;li&gt;两者的区别：
+          &lt;ul&gt;
+            &lt;li&gt;静态广播在程序没有运行或者程序已经销毁了，仍然可以收广播。动态广播是在程序中通过代码显示注册，因此必须在程序运行的时候才能收到广播。&lt;/li&gt;
+            &lt;li&gt;静态广播处理的时候每次都创建一个新的广播其接收对象，但动态广播一般都是一个广播接收器。&lt;/li&gt;
+            &lt;li&gt;针对一个无序广播，所有动态广播接收者都优先于所有的静态广播。同一个应用内先注册的广播接收者先收到广播。&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;广播的发送方式来说：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;普通广播（无序广播）：通过context.sendBroadcast或者context.sendBroadcastAsUser发送给当前系统中所有注册的接收者。&lt;/li&gt;
+        &lt;li&gt;有序广播：接收者按照优先级处理广播，并且前面处理广播的接收者可以终止广播的传递，一般通过context.sendOrderBroadcast或者context.sendOrderBroadcastAAsUser.（有序广播可以中止广播也能修改数据，无序广播都不能）&lt;/li&gt;
+        &lt;li&gt;粘性广播：可以发送给以后注册的广播接收者。系统会将之前发送的粘性广播保存在AMS中，一旦注册了与已保存广播符合的接收者，注册完成之后就会立刻收到广播。一般通过context.sendStickyBroadcast或者context.sendStickyOrderBroadcast。&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;广播发送和接收的原理?&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;发送原理：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;继承BroadcastReceiver，重写onReceive()方法。&lt;/li&gt;
+        &lt;li&gt;通过Binder机制向ActivityManagerService注册广播。&lt;/li&gt;
+        &lt;li&gt;通过Binder机制向ActivityMangerService发送广播&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;接收原理：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;ActivityManagerService查找符合相应条件的广播（IntentFilter/Permission）的&lt;/li&gt;
+        &lt;li&gt;BroadcastReceiver，将广播发送到BroadcastReceiver所在的消息队列中。&lt;/li&gt;
+        &lt;li&gt;BroadcastReceiver所在消息队列拿到此广播后，回调它的onReceive()方法。&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Binder机制是什么？&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;Android Binder是用来做进程通信的，Android的各个应用以及系统服务都运行在独立的进程中，它们的通信都依赖于Binder。&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Android里的Intent传递的数据有大小限制吗，如何解决？&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;Intent传递数据大小的限制大概在1M左右，超过这个限制就会静默崩溃。处理方式如下：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;进程内：EventBus，文件缓存、磁盘缓存。&lt;/li&gt;
+        &lt;li&gt;进程间：通过ContentProvider进行款进程数据共享和传递。&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;BroadcastReceiver的生命周期？&lt;/p&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;BroadcastReceiver的onReceive（）方法执行完成后，BroadcastReceiver的实例就会被销毁。如果onReceive（）方法在10s内没有执行完毕，Android会认为改程序无响应。所以在BroadcastReceiver里不能做一些比较耗时的操作，否则会弹出“Application NoResponse”对话框。特别说明的是，这里不能使用子线程来解决 ，因为BroadcastReceiver的生命周期很短，子线程可能还没有结束BroadcastReceiver就先结束了。BroadcastReceiver一旦结束，此时它所在的进程很容易在系统需要内存时被优先杀死，因为它属于空进程。&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;三注意事项&quot;&gt;三、注意事项&lt;/h3&gt;
+&lt;p&gt;无&lt;/p&gt;
+
+&lt;h3 id=&quot;四相关资源&quot;&gt;四、相关资源&lt;/h3&gt;
+&lt;p&gt;无&lt;/p&gt;</content><author><name>CHY</name></author><category term="Android" /><category term="四大组件" /><summary type="html">一、前言 对于学习Android开发知识的人来说，得从Android四大组件学起；Android的四大组件就是基础之一，其次还有五大储存、六大布局，把这些基础研究透了，Android开发的也就信手拈来了 学习四大组件，建议先从Activity开始，因为这个是在Android应用里面最常见的一个组件，之后是Server，其次是Broadcast，本文只介绍Broadcast，话不多说，搞起！</summary></entry><entry><title type="html">Android四大组件以及相关用法——ContentProvider</title><link href="https://chyblog.cn/2021/01/24/components-of-android-content-provider/" rel="alternate" type="text/html" title="Android四大组件以及相关用法——ContentProvider" /><published>2021-01-24T00:00:00+00:00</published><updated>2021-01-24T00:00:00+00:00</updated><id>https://chyblog.cn/2021/01/24/components%20of%20android-content%20provider</id><content type="html" xml:base="https://chyblog.cn/2021/01/24/components-of-android-content-provider/">&lt;h3 id=&quot;一前言&quot;&gt;一、前言&lt;/h3&gt;
+&lt;p&gt;对于学习Android开发知识的人来说，得从Android四大组件学起；Android的四大组件就是基础之一，其次还有五大储存、六大布局，把这些基础研究透了，Android开发的也就信手拈来了
+学习四大组件，建议先从&lt;a href=&quot;/2021/01/24/components-of-android-activity/&quot;&gt;Activity&lt;/a&gt;y开始，因为这个是在Android应用里面最常见的一个组件，之后是&lt;a href=&quot;/2021/01/24/components-of-android-server/&quot;&gt;Server&lt;/a&gt;，其次是&lt;a href=&quot;/2021/01/24/components-of-android-broadcast/&quot;&gt;Broadcast&lt;/a&gt;，最后是ContentProvider，本文只介绍ContentProvider，话不多说，搞起！&lt;/p&gt;
+
+&lt;h3 id=&quot;二正文&quot;&gt;二、正文&lt;/h3&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red;font-weight:bold&quot;&gt;ContentProvider&lt;/span&gt;：ContentProvider管理android以结构化方式存放的数据。他以相对安全的方式封装数据并且提供简易的处理机制。Content provider提供不同进程间数据交互的标准化接口。保证被访问数据的安全性。内容提供器可以选择只对哪一部分数据进行共享，从而保证我们程序中的隐私数据不会有泄漏的风险，以下是在ContentProvider的开发过程中会经常接触的一些知识：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;在Android中为什么要使用ContentProvider？&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;隐藏数据的实现方式，对外提供统一的数据访问接口。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;更好的数据访问权限管理。contentProvider可以对开发的数据进行权限设置，不同的Uri对应不同的权限，只有符合权限要求的组件才能访问到ContentProvider的具体操作。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;封装了跨进程共享的逻辑，我们只需要使用Uri即可访问数据，由系统管理ContentProvider的创建、生命周期及访问的线程分配，我们只管通过ContentResolver访问ContentProvider所提示的数据接口，不需要关心他所在的线程是否启动。&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;运行在主线程的ContentProvider为什么不会影响主线程UI操作？&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;ContentProvider的onCreat是运行在主线程的，而query、insert、delete等等，一些操作是运行在线程池中的工作线程的。，所以调用这些方法并不会阻塞ContentProvider所在进程的主线程，但可能会阻塞调用者所在进程的UI线程，所以调用ContentProvider操作仍然需要放在子线程去做，虽然直接进行的增删改查操作直接是在工作线程进行的，但是系统会让你的调用线程等待这个异步操作完成才能进行其他操作。&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;与sql实现上有什么区别？&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;ContentProvider隐藏了数据存储的细节，内部实现对用户完全透明，用户只要关心操作数据的Uri就可以，ContentProvider可以实现不同app之间数据共享。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;sql也能进行增删改查，但是这能对本程序下的数据进行操作，不能操作其他程序的数据。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;ContentProvider可以增删改查本地文件、xml文件的读取。&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;如何访问asserts中的数据库？&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;以前工程中由db文件，会存放在raw文件中	，用户安装后将db文件复制到data/data/packagename/database下就能直接访问。但现在只需要几行代码即可：&lt;/p&gt;
+      &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;//初始化&lt;/span&gt;
+   &lt;span class=&quot;nc&quot;&gt;AssetsDatabaseManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;initManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;//数据库都需要获取管理对象&lt;/span&gt;
+   &lt;span class=&quot;nc&quot;&gt;AssetsDatabaseManager&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assets&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;AssetsDatabaseManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;//通过管理对象获取数据库&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assets&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getDatabase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;address&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;说说ContentProvider、ContentResolver、ContentObserver 之间的关系&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;ContentResolver中提供了一系列的方法用于对数据进行CRUD，内容URI给内容提供器ContentProvider中的数据建立了唯一标识符，ContentObserver监听Uri数据的变化&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;ContentProvider：管理数据，提供数据的增删改查操作，数据源可以是数据库、文件、XML、网络等。ContentProvider为这些数据提供了统一的接口，可以用来做进程间数据共享;&lt;/li&gt;
+        &lt;li&gt;ContentResolver：ContentResolver可以不同的URI操作不同的ContentProvider中的数据库，外部进程可以通过ContentResolver 与ContentProvider进行交互;&lt;/li&gt;
+        &lt;li&gt;ContentObserver ：观察ContentProvider中的数据变化，并将变化通知给外界。&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;三注意事项&quot;&gt;三、注意事项&lt;/h3&gt;
+&lt;p&gt;无&lt;/p&gt;
+
+&lt;h3 id=&quot;四相关资源&quot;&gt;四、相关资源&lt;/h3&gt;
+&lt;p&gt;无&lt;/p&gt;</content><author><name>CHY</name></author><category term="Android" /><category term="四大组件" /><summary type="html">一、前言 对于学习Android开发知识的人来说，得从Android四大组件学起；Android的四大组件就是基础之一，其次还有五大储存、六大布局，把这些基础研究透了，Android开发的也就信手拈来了 学习四大组件，建议先从Activityy开始，因为这个是在Android应用里面最常见的一个组件，之后是Server，其次是Broadcast，最后是ContentProvider，本文只介绍ContentProvider，话不多说，搞起！</summary></entry><entry><title type="html">Android四大组件以及相关用法——Server</title><link href="https://chyblog.cn/2021/01/24/components-of-android-server/" rel="alternate" type="text/html" title="Android四大组件以及相关用法——Server" /><published>2021-01-24T00:00:00+00:00</published><updated>2021-01-24T00:00:00+00:00</updated><id>https://chyblog.cn/2021/01/24/components%20of%20android-server</id><content type="html" xml:base="https://chyblog.cn/2021/01/24/components-of-android-server/">&lt;h3 id=&quot;一前言&quot;&gt;一、前言&lt;/h3&gt;
+&lt;p&gt;对于学习Android开发知识的人来说，得从Android四大组件学起；Android的四大组件就是基础之一，其次还有五大储存、六大布局，把这些基础研究透了，Android开发的也就信手拈来了
+学习四大组件，建议先从Activity开始，因为这个是在Android应用里面最常见的一个组件，然后再到&lt;a href=&quot;/2021/01/24/components-of-android-server/&quot;&gt;Server&lt;/a&gt;，本文只介绍&lt;a href=&quot;/2021/01/24/components-of-android-server/&quot;&gt;Server&lt;/a&gt;，话不多说，搞起！&lt;/p&gt;
+
+&lt;h3 id=&quot;二正文&quot;&gt;二、正文&lt;/h3&gt;
+&lt;p&gt;&lt;span style=&quot;color:red;font-weight:bold&quot;&gt;Server&lt;/span&gt;： 是没有界面、生命周期比较长的程序，地位与Activity并列，然而，Server在后台运行，可跨进程调用，无法自己运行。&lt;/p&gt;
+
+&lt;p&gt;以下是在Server的开发过程中会经常接触的一些知识：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Server生命周期都有哪些？常用的方法有哪些？&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;/static/images/android/server life cycle.webp&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;onCreate()：首次创建服务时，系统将调用此方法。如果服务已在运行，则不会调用此方法，该方法只调用一次。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;onStartCommand()：当另一个组件通过调用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;startService()&lt;/code&gt;请求启动服务时，系统将调用此方法。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;onDestroy()：当服务不再使用且将被销毁时，系统将调用此方法。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;onBind()：当另一个组件通过调用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bindService()&lt;/code&gt;与服务绑定时，系统将调用此方法。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;onUnbind()：当另一个组件通过调用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unbindService()&lt;/code&gt;与服务解绑时，系统将调用此方法。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;onRebind()：当旧的组件与服务解绑后，另一个新的组件与服务绑定，onUnbind()返回true时，系统将调用此方法。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;在Server的生命周期里，常用的方法有：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;手动调用的方法：
+          &lt;ul&gt;
+            &lt;li&gt;startService() 启动服务&lt;/li&gt;
+            &lt;li&gt;stopService() 关闭服务&lt;/li&gt;
+            &lt;li&gt;bindService() 绑定服务&lt;/li&gt;
+            &lt;li&gt;unbindService() 解绑服务&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+        &lt;li&gt;自动调用的方法：
+          &lt;ul&gt;
+            &lt;li&gt;onCreat() 创建服务&lt;/li&gt;
+            &lt;li&gt;onStartCommand() 开始服务&lt;/li&gt;
+            &lt;li&gt;onDestroy() 销毁服务&lt;/li&gt;
+            &lt;li&gt;onBind() 绑定服务&lt;/li&gt;
+            &lt;li&gt;onUnbind() 解绑服务&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Server的启动方式有哪些？生命周期怎么运作？&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;/static/images/android/server start mode.webp&quot; alt=&quot;生命周期图&quot; /&gt;&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;第一种，start方式，该方式的执行过程为onCreate➜onStartCommad➜onDestory：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;用过start方式开启服务即便是调用者销毁service也不会被销毁，与现有的activity分离，不能与activity进行通信&lt;/li&gt;
+        &lt;li&gt;启动服务：startService()&lt;/li&gt;
+        &lt;li&gt;单次：onCreate()➜onStartCommand()&lt;/li&gt;
+        &lt;li&gt;多次：onCreate()➜onStartCommand()➜onStartCommand() ……&lt;/li&gt;
+        &lt;li&gt;多次启动服务onCreate只会执行一次，onStartCommand()会执行多次&lt;/li&gt;
+        &lt;li&gt;停止服务：stopService()，Server内执行onDestroy()&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;第二种，bind方式，该方式的执行过程为onCreate➜onBind➜onUnbind➜onDestory：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;通过bind方式开启服务会与调用者生命周期进行绑定，并且能够与activity进行通信，调用者销毁service也会销毁&lt;/li&gt;
+        &lt;li&gt;绑定服务：bindService()，Server内执行onCreate()➜onBind()&lt;/li&gt;
+        &lt;li&gt;解绑服务：unbindService()，Server内执行onUnbind()➜onDestroy()&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;先bind再进行start：&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;onCreate➜onBind➜onServiceConnected➜onStartCommand➜onUnbind➜onDestory&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;先start再进行bind:&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;onCreate➜onStartCommand➜onBind➜onServiceConnected➜onUnbind➜onDestory&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Server执行在哪个线程？能否进行耗时操作？&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;Server一般默认都运行在主线程（除非指定Server的运行线程），所以Server中不能进行耗时操作。如果有特殊情况可以在清单文件中配置Server所在的线程，例如：&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; ...
+ &lt;span class=&quot;nt&quot;&gt;&amp;lt;service&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;android:name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;com.baidu.location.f&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;android:enabled=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;true&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;android:process=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;:remote&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/service&amp;gt;&lt;/span&gt;
+ ...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;如何保证Server不被杀死？&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;设置优先级，通过在清单文件中intent-filter中通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;android:priority=“1000”&lt;/code&gt;来设置优先级，优先级越高越不容易被杀死&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;在onStartCommend中调用startForeground将service提升为前台进程，最后记得在onStop中调用stopForeground&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;将Server设置为START_STICKLY,当service被杀死之后会重启，重传intent，保持与之前一样&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;Server被杀死之后进行拉活。例如双线程唤起，当一个线程被杀死之后，另一个线程可以立即重启进程。或者依靠系统唤起&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;重复调用startService或者bindService会重复执行生命周期吗？&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;重复执行startService会重复执行onStartCommand，但是onCreate只执行一次&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;重复执行startService会重复执行onStartCommand，但是onCreate只执行一次&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;重复执行bindService所有生命周期不会重复执行，onBind和onCreate只执行一次&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在Server中onStartCommand中能否执行网络操作？如何在Server中进行网络操作?&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;可以在onStartCommand中进行网络操作，如果要在网络请求中进行耗时操作可以选择IntentService，IntentService是Service的子类，用来处理异步请求。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;IntentService在onCreate中通过HandleThread单独开启一个线程来处理Intent请求对象对应的任务，可以避免事务处理而阻塞线程。&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;onHandleIntent()方法针对不同的intent进行不同的事务处理即可，执行完一个Intent请求对象的工作之后，如果没有新的intent请求到达，则自动停止Service，否则会取出下一个intent请求处理任务。&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Service中可以弹出Toast吗？&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;弹出toast就需要一个上下文对象context，而Service本身就是Context的子类，因此在Service中弹出Toast是完全可以的。&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;三注意事项&quot;&gt;三、注意事项&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;需要注意两种启动方式的区别：
+    &lt;ul&gt;
+      &lt;li&gt;startService()：开启Service，调用者退出后Service仍然存在。&lt;/li&gt;
+      &lt;li&gt;bindService()：开启Service，调用者退出后Service也随即退出。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;四相关资源&quot;&gt;四、相关资源&lt;/h3&gt;
+&lt;p&gt;无&lt;/p&gt;</content><author><name></name></author><category term="Android" /><category term="四大组件" /><summary type="html">一、前言 对于学习Android开发知识的人来说，得从Android四大组件学起；Android的四大组件就是基础之一，其次还有五大储存、六大布局，把这些基础研究透了，Android开发的也就信手拈来了 学习四大组件，建议先从Activity开始，因为这个是在Android应用里面最常见的一个组件，然后再到Server，本文只介绍Server，话不多说，搞起！</summary></entry></feed>
