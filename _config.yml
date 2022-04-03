@@ -11,7 +11,7 @@ keywords: 陈宏业, 一切随猿, CHY, Python, Android, Vue, UniApp, Uni-App, �
 timezone: Asia/Guangzhou
 encoding: "utf-8"
 side_bar_repo_limit: 5
-repository: sky-chy/chyblog
+repository: sky-chy/bd-s
 # 对 css 和 js 资源的 cdn 加速配置
 cdn:
     jsdelivr:
@@ -131,7 +131,7 @@ gitment:
 # https://github.com/gitalk/gitalk#install
 gitalk:
     owner: sky-chy # GitHub用户名字
-    repo: chyblog # 刚才建立仓库的名字
+    repo: bd-s # 刚才建立仓库的名字
     clientID: c31e7ecdb4d2189be69d
     clientSecret:  503c09fb55ecf7b63b9d1bae1837d162b6503354
     proxy: https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token
