@@ -122,7 +122,7 @@
   
     {
       "title"    : "Mac OS的使用(一)—各个模块的介绍",
-      "category" : "Mac OS的使用",
+      "category" : "Mac OS",
       
       "url"      : "https://chyblog.cn/2022/04/03/Introduction-to-mac-os/",
       "keywords" : "陈宏业, CHY, 一切随猿, 教程, 网站, Mac OS, OS, Mac, 苹果系统, 黑苹果, 小米, XiaoMi笔记本, XiaoMi, 笔记本, 15 Pro"
@@ -130,10 +130,18 @@
   
     {
       "title"    : "Mac OS的使用(二)—介绍系统控制入口",
-      "category" : "Mac OS的使用",
+      "category" : "Mac OS",
       
       "url"      : "https://chyblog.cn/2022/04/04/know-the-system-control-entry/",
-      "keywords" : "陈宏业, CHY, 一切随猿, 教程, 网站, Mac OS, OS, Mac, 苹果系统, 黑苹果, 小米, XiaoMi笔记本, XiaoMi, 笔记本, 15 Pro"
+      "keywords" : "陈宏业, CHY, 一切随猿, 教程, 网站, Mac OS, OS, Mac, 苹果系统, 黑苹果, 小米, XiaoMi笔记本, XiaoMi, 笔记本, 15 Pro, 苹果系统设置, Mac OS设置, 设置, 系统偏好设置"
+    } ,
+  
+    {
+      "title"    : "Mac OS的使用(三)—程序坞(Dock栏)的使用",
+      "category" : "Mac OS",
+      
+      "url"      : "https://chyblog.cn/2022/04/04/using-the-dock/",
+      "keywords" : "陈宏业, CHY, 一切随猿, 教程, 网站, Mac OS, OS, Mac, 苹果系统, 黑苹果, 小米, XiaoMi笔记本, XiaoMi, 笔记本, 15 Pro, 苹果系统设置, Mac OS设置, 设置, 程序坞, Dock, Dock栏"
     } ,
   
     {
