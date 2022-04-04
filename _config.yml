@@ -20,8 +20,8 @@ components:
     # 分享
     # weibo,qq,wechat,douban,qzone,linkedin,facebook,twitter
     share:
-        enabled: false
-        hide-platforms: qq,facebook
+        enabled: true
+        hide-platforms: wechat,qq,facebook
     # 不蒜子访问统计
     busuanzi:
         enabled: true
@@ -46,7 +46,7 @@ compress_html:
   clippings: all
   comments: ["<!--", "-->"]
 # 代码高亮风格，支持的 theme 列表见 https://github.com/mzlogin/rouge-themes
-highlight_theme: colorful
+highlight_theme: gruvbox.light
 
 # ---------------- #
 #      Author      #
