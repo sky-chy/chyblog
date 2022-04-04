@@ -25,7 +25,7 @@ components:
     # 不蒜子访问统计
     busuanzi:
         enabled: true
-        start_date: 2020-05-03
+        start_date: 2021-06-03
     # My Popular Repositories
     side_bar_repo:
         enabled: true
@@ -46,7 +46,7 @@ compress_html:
   clippings: all
   comments: ["<!--", "-->"]
 # 代码高亮风格，支持的 theme 列表见 https://github.com/mzlogin/rouge-themes
-highlight_theme: github
+highlight_theme: colorful
 
 # ---------------- #
 #      Author      #
