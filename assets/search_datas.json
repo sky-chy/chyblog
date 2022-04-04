@@ -28,7 +28,7 @@
   
   
     {
-      "title"    : "Categories",
+      "title"    : "分类",
       "url"      : "https://chyblog.cn/categories/",
       "keywords" : "分类"
     } ,
@@ -46,7 +46,7 @@
   
   
     {
-      "title"    : "Links",
+      "title"    : "链接",
       "url"      : "https://chyblog.cn/links/",
       "keywords" : "友情链接"
     } ,
@@ -72,7 +72,7 @@
   
   
     {
-      "title"    : "Wiki",
+      "title"    : "维基",
       "url"      : "https://chyblog.cn/wiki/",
       "keywords" : "维基, Wiki"
     } ,
