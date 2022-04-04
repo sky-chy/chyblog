@@ -1,4 +1,58 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://chyblog.cn/feed.xml" rel="self" type="application/atom+xml" /><link href="https://chyblog.cn/" rel="alternate" type="text/html" /><updated>2022-04-04T03:15:09+00:00</updated><id>https://chyblog.cn/feed.xml</id><title type="html">一切随猿</title><subtitle>不定时分享Windows操作、黑苹果安装和使用、Python、Android、Electron-Vue、Vue、Uni-app和小程序开发的教程或者资源的网站，免费提供一切在教程中出现的资源，也不定时提供一些可玩性比较高的软件</subtitle><author><name>CHY</name></author><entry><title type="html">Mac OS的使用(一)—各个模块的介绍</title><link href="https://chyblog.cn/2022/04/03/Introduction-to-Mac-OS/" rel="alternate" type="text/html" title="Mac OS的使用(一)—各个模块的介绍" /><published>2022-04-03T00:00:00+00:00</published><updated>2022-04-03T00:00:00+00:00</updated><id>https://chyblog.cn/2022/04/03/Introduction%20to%20Mac%20OS</id><content type="html" xml:base="https://chyblog.cn/2022/04/03/Introduction-to-Mac-OS/">&lt;h3 id=&quot;一前言&quot;&gt;一、前言&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://chyblog.cn/feed.xml" rel="self" type="application/atom+xml" /><link href="https://chyblog.cn/" rel="alternate" type="text/html" /><updated>2022-04-04T13:39:42+00:00</updated><id>https://chyblog.cn/feed.xml</id><title type="html">一切随猿</title><subtitle>不定时分享Windows操作、黑苹果安装和使用、Python、Android、Electron-Vue、Vue、Uni-app和小程序开发的教程或者资源的网站，免费提供一切在教程中出现的资源，也不定时提供一些可玩性比较高的软件</subtitle><author><name>CHY</name></author><entry><title type="html">Mac OS的使用(二)—介绍系统控制入口</title><link href="https://chyblog.cn/2022/04/04/know-the-system-control-entry/" rel="alternate" type="text/html" title="Mac OS的使用(二)—介绍系统控制入口" /><published>2022-04-04T00:00:00+00:00</published><updated>2022-04-04T00:00:00+00:00</updated><id>https://chyblog.cn/2022/04/04/know-the-system-control-entry</id><content type="html" xml:base="https://chyblog.cn/2022/04/04/know-the-system-control-entry/">&lt;h3 id=&quot;一前言&quot;&gt;一、前言&lt;/h3&gt;
+
+&lt;p&gt;继上节文章的对Mac OS常用模块的介绍，本节就来说说Mac OS的的系统设置在哪里，以及如何使用系统设置来调教适合自己使用的OS&lt;/p&gt;
+
+&lt;h3 id=&quot;二正文&quot;&gt;二、正文&lt;/h3&gt;
+
+&lt;p&gt;Mac OS的系统设置处于屏幕的左上角苹果logo处，如下图所示：
+&lt;img src=&quot;/images/posts/mac/mac-os-setup.png&quot; alt=&quot;Mac 模块介绍&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;关于本机&lt;/code&gt;，此处是总览系统配置的入口，如下图所示
+    &lt;img src=&quot;/images/posts/mac/mac-os-about.png&quot; alt=&quot;关于本机&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;系统偏好设置&lt;/code&gt;，此处是调教系统的入口，例如程序坞的设置，屏幕保护程序、触发角和通知管理等设置，均是从此处进入，如果在界面上没找到具体的功能，可以在该界面的右上角搜索具体的功能
+&lt;img src=&quot;/images/posts/mac/mac-os-system-preferences.png&quot; alt=&quot;系统偏好设置&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;App Store...&lt;/code&gt;，此处是打开APP Store的入口，当然也可以在启动台里面打开App Store&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;最近使用&lt;/code&gt;，一般情况下，此处是记录你此前一段时间内用过的软件、打开过的文稿和连接过的服务器&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;强制退出&lt;/code&gt;，此处是调出一个强制退出程序的对话框，如果有一些应用无法正常退出的，可以在此处进行强制退出
+&lt;img src=&quot;/images/posts/mac/mac-os-force-quit.png&quot; alt=&quot;强制退出&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;睡眠&lt;/code&gt;,&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;重新启动&lt;/code&gt;,&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;关机&lt;/code&gt;，这几个功能就很好理解了，跟Windows一样的电源功能是一样的&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;锁定屏幕&lt;/code&gt;，这个功能跟Windows的&lt;kbd&gt;win&lt;/kbd&gt;+&lt;kbd&gt;L&lt;/kbd&gt;的效果一样的，都是锁屏，如果有密码，再次解锁的时候就需要输入密码&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;退出登录“XXX”&lt;/code&gt;，顾名思义就是退出当前用户，然后再主动切换新的用户进行登录，例如登录Guest用户（需要先在系统偏好设置里面启用Guest）。这个跟Windows系统中的多个用户存在同一台机器上面的是一个概念，一般情况下，这个电脑都是自己使用的话，都用不到多用户登录&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;三注意事项&quot;&gt;三、注意事项&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;系统偏好设置里面尽量不要登录来历不明的APPID，以防锁机从而导致不必要的麻烦&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;如果需要在App Store里面下载应用程序，就需要先登录APPID，这个更IPhone上面的下载是一样的&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;如果不想通过App Store来下载应用程序，可以直接在百度里面搜索相关软件，但是一定要看准官网，一般知名的软件的网站都会认证了官网的，如下图所示：
+  &lt;img src=&quot;/images/posts/others/qq-music.png&quot; alt=&quot;QQ音乐&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;如果还有小伙伴不知道怎么操作系统设置的，欢迎在下面评论留言，博主都会一一解答！！！&lt;/p&gt;</content><author><name>CHY</name></author><category term="Mac OS的使用" /><summary type="html">一、前言</summary></entry><entry><title type="html">Mac OS的使用(一)—各个模块的介绍</title><link href="https://chyblog.cn/2022/04/03/Introduction-to-mac-os/" rel="alternate" type="text/html" title="Mac OS的使用(一)—各个模块的介绍" /><published>2022-04-03T00:00:00+00:00</published><updated>2022-04-03T00:00:00+00:00</updated><id>https://chyblog.cn/2022/04/03/Introduction-to-mac-os</id><content type="html" xml:base="https://chyblog.cn/2022/04/03/Introduction-to-mac-os/">&lt;h3 id=&quot;一前言&quot;&gt;一、前言&lt;/h3&gt;
 &lt;p&gt;Mac OS的系统架构和屏幕色彩撞见开发者或者设计师，就犹如李白《将进酒》中写下的“此中有真意，欲辨已忘言”，但很多开发者或者设计师初次接触苹果的Mac OS时，往往不是很清楚Mac OS的各项操作，以至于无法深度发掘Mac OS中的各项功能，下面就由博主来大概介绍一下Mac OS的几个常用模块&lt;/p&gt;
 
 &lt;h3 id=&quot;二正文&quot;&gt;二、正文&lt;/h3&gt;
@@ -41,7 +95,7 @@
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;如果你对Mac OS的使用有更多的未解之谜，欢迎在下面评论留言，博主都会一一解答！！！&lt;/p&gt;</content><author><name>CHY</name></author><category term="Mac" /><summary type="html">一、前言 Mac OS的系统架构和屏幕色彩撞见开发者或者设计师，就犹如李白《将进酒》中写下的“此中有真意，欲辨已忘言”，但很多开发者或者设计师初次接触苹果的Mac OS时，往往不是很清楚Mac OS的各项操作，以至于无法深度发掘Mac OS中的各项功能，下面就由博主来大概介绍一下Mac OS的几个常用模块</summary></entry><entry><title type="html">boundingClientRect重复回调</title><link href="https://chyblog.cn/2021/03/10/get-node-information-repeatedly/" rel="alternate" type="text/html" title="boundingClientRect重复回调" /><published>2021-03-10T00:00:00+00:00</published><updated>2021-03-10T00:00:00+00:00</updated><id>https://chyblog.cn/2021/03/10/get%20node%20information%20repeatedly</id><content type="html" xml:base="https://chyblog.cn/2021/03/10/get-node-information-repeatedly/">&lt;h3 id=&quot;一情景导入&quot;&gt;一、情景导入&lt;/h3&gt;
+&lt;p&gt;如果你对Mac OS的使用有更多的未解之谜，欢迎在下面评论留言，博主都会一一解答！！！&lt;/p&gt;</content><author><name>CHY</name></author><category term="Mac OS的使用" /><summary type="html">一、前言 Mac OS的系统架构和屏幕色彩撞见开发者或者设计师，就犹如李白《将进酒》中写下的“此中有真意，欲辨已忘言”，但很多开发者或者设计师初次接触苹果的Mac OS时，往往不是很清楚Mac OS的各项操作，以至于无法深度发掘Mac OS中的各项功能，下面就由博主来大概介绍一下Mac OS的几个常用模块</summary></entry><entry><title type="html">boundingClientRect重复回调</title><link href="https://chyblog.cn/2021/03/10/get-node-information-repeatedly/" rel="alternate" type="text/html" title="boundingClientRect重复回调" /><published>2021-03-10T00:00:00+00:00</published><updated>2021-03-10T00:00:00+00:00</updated><id>https://chyblog.cn/2021/03/10/get%20node%20information%20repeatedly</id><content type="html" xml:base="https://chyblog.cn/2021/03/10/get-node-information-repeatedly/">&lt;h3 id=&quot;一情景导入&quot;&gt;一、情景导入&lt;/h3&gt;
 &lt;p&gt;近日，博主在自定义组件中使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uni.createSelectorQuery()&lt;/code&gt;这个API去获取节点信息来计算页面控件高度的时候，发现重复获取了一个数据，导致计算的数据不符合预期&lt;/p&gt;
 
 &lt;h3 id=&quot;二关键词&quot;&gt;二、关键词&lt;/h3&gt;
