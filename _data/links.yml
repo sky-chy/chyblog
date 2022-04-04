@@ -1,12 +1,11 @@
 - name: 廖雪峰的官方网站
   url: https://www.liaoxuefeng.com/
-  des: 涵盖Java、JavaScript、Python、区块链、SQL、Git等教程的网站
+  src: life
 
 - name: 菜鸟教程
-  url: https://www.runoob.com/
-  des: 提供了编程的基础技术教程, 囊括市面上大部分的编程语言
+  url: https://www.runoob.com/ 
+  src: life
 
-  
 - name: 码志
-  url: https://mazhuang.org/
-  des: 本站使用的模板网站 
+  url: https://mazhuang.org/ 
+  src: www
