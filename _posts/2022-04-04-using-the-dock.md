@@ -31,6 +31,9 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Mac OS, OS, Mac, 苹果�
   * 如果需要对程序坞进行更多的个性化设置，可以通过系统偏好设置里面的程序坞进行设置，如下图所示：<br/>
   ![Dock](/images/posts/mac/mac-os-dock-setup.png)
   
+  * 默认情况下，程序坞的最右边那个是废纸篓，与Windows中的`回收站`是一样的，人为删除文件后都会在此处出现，需要在此处点击鼠标右键，如下图所示：<br/>
+  ![Dock](/images/posts/mac/mac-os-dock-wastebasket.png)
+  
   * 如果不知道如何进入系统偏好设置，可以参考上一节的文章
 
 ### 三、注意事项
