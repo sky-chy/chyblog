@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://chyblog.cn/feed.xml" rel="self" type="application/atom+xml" /><link href="https://chyblog.cn/" rel="alternate" type="text/html" /><updated>2022-04-08T04:29:20+00:00</updated><id>https://chyblog.cn/feed.xml</id><title type="html">一切随猿</title><subtitle>不定时分享Windows操作、黑苹果安装和使用、Python、Android、Electron-Vue、Vue、Uni-app和小程序开发的教程或者资源的网站，免费提供一切在教程中出现的资源，也不定时提供一些可玩性比较高的软件</subtitle><author><name>CHY</name></author><entry><title type="html">splinter通过远程调试的方式链接chrome</title><link href="https://chyblog.cn/2022/04/07/remote-to-chrome-for-splinter/" rel="alternate" type="text/html" title="splinter通过远程调试的方式链接chrome" /><published>2022-04-07T00:00:00+00:00</published><updated>2022-04-07T00:00:00+00:00</updated><id>https://chyblog.cn/2022/04/07/remote-to-chrome-for-splinter</id><content type="html" xml:base="https://chyblog.cn/2022/04/07/remote-to-chrome-for-splinter/">&lt;h3 id=&quot;一情景导入&quot;&gt;一、情景导入&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://chyblog.cn/feed.xml" rel="self" type="application/atom+xml" /><link href="https://chyblog.cn/" rel="alternate" type="text/html" /><updated>2022-04-08T04:36:16+00:00</updated><id>https://chyblog.cn/feed.xml</id><title type="html">一切随猿</title><subtitle>不定时分享Windows操作、黑苹果安装和使用、Python、Android、Electron-Vue、Vue、Uni-app和小程序开发的教程或者资源的网站，免费提供一切在教程中出现的资源，也不定时提供一些可玩性比较高的软件</subtitle><author><name>CHY</name></author><entry><title type="html">splinter通过远程调试的方式连接chrome</title><link href="https://chyblog.cn/2022/04/07/remote-to-chrome-for-splinter/" rel="alternate" type="text/html" title="splinter通过远程调试的方式连接chrome" /><published>2022-04-07T00:00:00+00:00</published><updated>2022-04-07T00:00:00+00:00</updated><id>https://chyblog.cn/2022/04/07/remote-to-chrome-for-splinter</id><content type="html" xml:base="https://chyblog.cn/2022/04/07/remote-to-chrome-for-splinter/">&lt;h3 id=&quot;一情景导入&quot;&gt;一、情景导入&lt;/h3&gt;
 &lt;p&gt;如果通过splinter直接启动chrome浏览器，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;window.navigator.webdriver&lt;/code&gt;会被标记为True，本次启动的浏览器是通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;webdriver&lt;/code&gt;启动的浏览器，很多大厂的网站就会通过这个特征码来甄别并防范爬虫，但是如果需要降低被甄别的概率，那就得通过远程的方式进行chrome的操作了&lt;/p&gt;
 
 &lt;h3 id=&quot;二关键词&quot;&gt;二、关键词&lt;/h3&gt;
@@ -30,19 +30,16 @@
  &lt;span class=&quot;n&quot;&gt;progress_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'C:&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Program Files&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Google&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Chrome&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Application&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;chrome.exe'&lt;/span&gt;
  &lt;span class=&quot;n&quot;&gt;subprocess&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Popen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;progress_path&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; --remote-debugging-port=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; --user-data-dir=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_data_dir&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--remote-debugging-port&lt;/code&gt;，这是指定&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chrome&lt;/code&gt;的调试端口，需要与下文中的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;debuggerAddress&lt;/code&gt;相互呼应&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--remote-debugging-port&lt;/code&gt;，这是指定&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chrome&lt;/code&gt;的调试端口，需要与下文中的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;debuggerAddress&lt;/code&gt;相互呼应&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--user-data-dir&lt;/code&gt;，这个参数指定一个独立的目录存放产生的用户数据，在连接时也要设置，否则会失效&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--user-data-dir&lt;/code&gt;，这个参数指定一个独立的目录存放产生的用户数据，在连接时也要设置，否则会失效&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ol&gt;
   &lt;li&gt;
     &lt;p&gt;通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chromedriver&lt;/code&gt;连接已经打开的浏览器，执行以下代码：&lt;/p&gt;
 

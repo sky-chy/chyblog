@@ -153,7 +153,7 @@
     } ,
   
     {
-      "title"    : "splinter通过远程调试的方式链接chrome",
+      "title"    : "splinter通过远程调试的方式连接chrome",
       "category" : "Python",
       
       "url"      : "https://chyblog.cn/2022/04/07/remote-to-chrome-for-splinter/",
