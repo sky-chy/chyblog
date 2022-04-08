@@ -27,15 +27,19 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, splinter, Chrome, 爬虫
 + selenium 4.1.2
 
 ### 五、实现步骤
-1. 通过`subprocess`启动`chrome`,假如浏览器的安装路径为`C:\Program Files\Google\Chrome`，执行以下代码：
+1. 通过`subprocess`启动`chrome`,假如浏览器的安装路径为`C:\Program Files\Google\Chrome`，用户数据路径为`C:\split\ChromeProfile`，执行以下代码：
 
     ```python
     import subprocess
-    subprocess.Popen('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\\split\\ChromeProfile"')
-    ```
-    * `--remote-debugging-port`，这是指定`chrome`的调试端口，需要与下文种的`debuggerAddress`相互呼应
 
-    * `--user-data-dir`，这个参数指定一个独立的目录存放产生的用户数据，在连接时也要设置，否则会失效
+    port = 9222
+    user_data_dir = 'C:\\split\\ChromeProfile'
+    progress_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+    subprocess.Popen(f'{progress_path} --remote-debugging-port={port} --user-data-dir={user_data_dir}')
+    ```
+  * `--remote-debugging-port`，这是指定`chrome`的调试端口，需要与下文中的`debuggerAddress`相互呼应
+
+  * `--user-data-dir`，这个参数指定一个独立的目录存放产生的用户数据，在连接时也要设置，否则会失效
 
 1. 通过`chromedriver`连接已经打开的浏览器，执行以下代码：
 
@@ -53,12 +57,29 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, splinter, Chrome, 爬虫
 ### 六、实操代码
 ```python
 import subprocess
+import socket
 
 from selenium.webdriver.chrome.options import Options
 from splinter.driver.webdriver.chrome import WebDriver as ChromeWebDriver
 
+# 判断端口是否可用
+def net_is_used(port, ip='127.0.0.1'):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        s.connect((ip, port))
+        s.shutdown(2)
+        return True
+    except:
+        return False
+
+# 初始化调试对象
 def init_browser():
-    subprocess.Popen('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\\split\\ChromeProfile"')
+    port = 9222
+    user_data_dir = 'C:\\split\\ChromeProfile'
+    progress_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+    if not net_is_used(port):
+        subprocess.Popen(f'{progress_path} --remote-debugging-port={port} --user-data-dir={user_data_dir}')
+
     chrome_options = Options()
     chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
     browser: Optional[ChromeWebDriver] = Browser('chrome', headless=False, incognito=incognito,options=chrome_options)
