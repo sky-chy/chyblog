@@ -37,6 +37,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, splinter, Chrome, 爬虫
     progress_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
     subprocess.Popen(f'{progress_path} --remote-debugging-port={port} --user-data-dir={user_data_dir}')
     ```
+    
   * `--remote-debugging-port`，这是指定`chrome`的调试端口，需要与下文中的`debuggerAddress`相互呼应
 
   * `--user-data-dir`，这个参数指定一个独立的目录存放产生的用户数据，在连接时也要设置，否则会失效
