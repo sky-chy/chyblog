@@ -1,10 +1,10 @@
 ---
 topmost: false #置顶
 layout: post
-title: splinter通过远程调试的方式链接chrome
+title: splinter通过远程调试的方式连接chrome
 categories: [Python, 爬虫]
 author: CHY
-description: splinter通过远程调试的方式链接chrome
+description: splinter通过远程调试的方式连接chrome
 keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, splinter, Chrome, 爬虫, 反爬虫, subprocess, remote-debugging-port, 调试Chrome, selenium, Python, Python3.8.5, PyCharm, chromedriver
 ---
 
@@ -37,10 +37,10 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, splinter, Chrome, 爬虫
     progress_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
     subprocess.Popen(f'{progress_path} --remote-debugging-port={port} --user-data-dir={user_data_dir}')
     ```
-    
-  * `--remote-debugging-port`，这是指定`chrome`的调试端口，需要与下文中的`debuggerAddress`相互呼应
 
-  * `--user-data-dir`，这个参数指定一个独立的目录存放产生的用户数据，在连接时也要设置，否则会失效
+    * `--remote-debugging-port`，这是指定`chrome`的调试端口，需要与下文中的`debuggerAddress`相互呼应
+
+    * `--user-data-dir`，这个参数指定一个独立的目录存放产生的用户数据，在连接时也要设置，否则会失效
 
 1. 通过`chromedriver`连接已经打开的浏览器，执行以下代码：
 
