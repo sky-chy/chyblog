@@ -5,7 +5,7 @@ title: splinter通过远程调试的方式连接chrome
 categories: [Python, 爬虫]
 author: CHY
 description: splinter通过远程调试的方式连接chrome
-keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, splinter, Chrome, 爬虫, 反爬虫, subprocess, remote-debugging-port, 调试Chrome, selenium, Python, Python3.8.5, PyCharm, chromedriver
+keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, splinter, Chrome, 爬虫, 反爬虫, subprocess, remote-debugging-port, 调试Chrome, selenium, Python, Python3.8.5, PyCharm, chromedriver, --proxy-server
 ---
 
 ### 一、情景导入
@@ -35,12 +35,15 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, splinter, Chrome, 爬虫
     port = 9222
     user_data_dir = 'C:\\split\\ChromeProfile'
     progress_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-    subprocess.Popen(f'{progress_path} --remote-debugging-port={port} --user-data-dir={user_data_dir}')
+    proxy_server = '127.0.0.1:8080'
+    subprocess.Popen(f'{progress_path} --remote-debugging-port={port} --user-data-dir={user_data_dir} --proxy-server={proxy_server}')
     ```
 
     * `--remote-debugging-port`，这是指定`chrome`的调试端口，需要与下文中的`debuggerAddress`相互呼应
 
     * `--user-data-dir`，这个参数指定一个独立的目录存放产生的用户数据，在连接时也要设置，否则会失效
+
+    * `--proxy-server`，这个参数是为浏览器指定一个代理IP
 
 1. 通过`chromedriver`连接已经打开的浏览器，执行以下代码：
 
