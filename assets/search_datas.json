@@ -157,7 +157,7 @@
       "category" : "Python",
       
       "url"      : "https://chyblog.cn/2022/04/07/remote-to-chrome-for-splinter/",
-      "keywords" : "陈宏业, CHY, 一切随猿, 教程, 网站, splinter, Chrome, 爬虫, 反爬虫, subprocess, remote-debugging-port, 调试Chrome, selenium, Python, Python3.8.5, PyCharm, chromedriver"
+      "keywords" : "陈宏业, CHY, 一切随猿, 教程, 网站, splinter, Chrome, 爬虫, 反爬虫, subprocess, remote-debugging-port, 调试Chrome, selenium, Python, Python3.8.5, PyCharm, chromedriver, --proxy-server"
     } ,
   
     {
