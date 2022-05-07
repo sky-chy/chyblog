@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://chyblog.cn/feed.xml" rel="self" type="application/atom+xml" /><link href="https://chyblog.cn/" rel="alternate" type="text/html" /><updated>2022-04-12T15:51:54+00:00</updated><id>https://chyblog.cn/feed.xml</id><title type="html">一切随猿</title><subtitle>不定时分享Windows操作、黑苹果安装和使用、Python、Android、Electron-Vue、Vue、Uni-app和小程序开发的教程或者资源的网站，免费提供一切在教程中出现的资源，也不定时提供一些可玩性比较高的软件</subtitle><author><name>CHY</name></author><entry><title type="html">splinter通过远程调试的方式连接chrome</title><link href="https://chyblog.cn/2022/04/07/remote-to-chrome-for-splinter/" rel="alternate" type="text/html" title="splinter通过远程调试的方式连接chrome" /><published>2022-04-07T00:00:00+00:00</published><updated>2022-04-07T00:00:00+00:00</updated><id>https://chyblog.cn/2022/04/07/remote-to-chrome-for-splinter</id><content type="html" xml:base="https://chyblog.cn/2022/04/07/remote-to-chrome-for-splinter/">&lt;h3 id=&quot;一情景导入&quot;&gt;一、情景导入&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://chyblog.cn/feed.xml" rel="self" type="application/atom+xml" /><link href="https://chyblog.cn/" rel="alternate" type="text/html" /><updated>2022-05-07T02:21:37+00:00</updated><id>https://chyblog.cn/feed.xml</id><title type="html">一切随猿</title><subtitle>不定时分享Windows操作、黑苹果安装和使用、Python、Android、Electron-Vue、Vue、Uni-app和小程序开发的教程或者资源的网站，免费提供一切在教程中出现的资源，也不定时提供一些可玩性比较高的软件</subtitle><author><name>CHY</name></author><entry><title type="html">splinter通过远程调试的方式连接chrome</title><link href="https://chyblog.cn/2022/04/07/remote-to-chrome-for-splinter/" rel="alternate" type="text/html" title="splinter通过远程调试的方式连接chrome" /><published>2022-04-07T00:00:00+00:00</published><updated>2022-04-07T00:00:00+00:00</updated><id>https://chyblog.cn/2022/04/07/remote-to-chrome-for-splinter</id><content type="html" xml:base="https://chyblog.cn/2022/04/07/remote-to-chrome-for-splinter/">&lt;h3 id=&quot;一情景导入&quot;&gt;一、情景导入&lt;/h3&gt;
 &lt;p&gt;如果通过splinter直接启动chrome浏览器，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;window.navigator.webdriver&lt;/code&gt;会被标记为True，本次启动的浏览器是通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;webdriver&lt;/code&gt;启动的浏览器，很多大厂的网站就会通过这个特征码来甄别并防范爬虫，但是如果需要降低被甄别的概率，那就得通过远程的方式进行chrome的操作了&lt;/p&gt;
 
 &lt;h3 id=&quot;二关键词&quot;&gt;二、关键词&lt;/h3&gt;
@@ -118,8 +118,11 @@
 &lt;p&gt;继上节介绍了Mac OS的程序坞（又叫Dock栏），这节就来说说Mac OS的访达（又叫Finder）,访达和程序坞作为日常使用中最常用的部分，我们也有必要对它进行深度了解&lt;/p&gt;
 
 &lt;h3 id=&quot;二正文&quot;&gt;二、正文&lt;/h3&gt;
-&lt;p&gt;程序坞默认情况下是处于屏幕的正下方，如下图所示：&lt;br /&gt;
-&lt;img src=&quot;/images/posts/mac/mac-os-finder.png&quot; alt=&quot;Dock&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;程序坞默认情况下是处于屏幕的正下方，如下图所示：&lt;br /&gt;
+ &lt;img src=&quot;/images/posts/mac/mac-os-finder.png&quot; alt=&quot;Dock&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -165,7 +168,19 @@
   &lt;li&gt;
     &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;12&lt;/code&gt;，这个地方是内容区，文件夹和文件将会在这个地方进行展示的&lt;/p&gt;
   &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>CHY</name></author><category term="Mac OS" /><summary type="html">一、前言 继上节介绍了Mac OS的程序坞（又叫Dock栏），这节就来说说Mac OS的访达（又叫Finder）,访达和程序坞作为日常使用中最常用的部分，我们也有必要对它进行深度了解</summary></entry><entry><title type="html">Mac OS的使用(二)—介绍系统控制入口</title><link href="https://chyblog.cn/2022/04/04/know-the-system-control-entry/" rel="alternate" type="text/html" title="Mac OS的使用(二)—介绍系统控制入口" /><published>2022-04-04T00:00:00+00:00</published><updated>2022-04-04T00:00:00+00:00</updated><id>https://chyblog.cn/2022/04/04/know-the-system-control-entry</id><content type="html" xml:base="https://chyblog.cn/2022/04/04/know-the-system-control-entry/">&lt;h3 id=&quot;一前言&quot;&gt;一、前言&lt;/h3&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;新建、重命名和删除文件夹：&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;新建、重命名和删除文件：&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;复制、拷贝和黏贴文件：&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;</content><author><name>CHY</name></author><category term="Mac OS" /><summary type="html">一、前言 继上节介绍了Mac OS的程序坞（又叫Dock栏），这节就来说说Mac OS的访达（又叫Finder）,访达和程序坞作为日常使用中最常用的部分，我们也有必要对它进行深度了解</summary></entry><entry><title type="html">Mac OS的使用(二)—介绍系统控制入口</title><link href="https://chyblog.cn/2022/04/04/know-the-system-control-entry/" rel="alternate" type="text/html" title="Mac OS的使用(二)—介绍系统控制入口" /><published>2022-04-04T00:00:00+00:00</published><updated>2022-04-04T00:00:00+00:00</updated><id>https://chyblog.cn/2022/04/04/know-the-system-control-entry</id><content type="html" xml:base="https://chyblog.cn/2022/04/04/know-the-system-control-entry/">&lt;h3 id=&quot;一前言&quot;&gt;一、前言&lt;/h3&gt;
 &lt;p&gt;继上节文章的对Mac OS常用模块的介绍，本节就来说说Mac OS的的系统设置在哪里，以及如何使用系统设置来调教适合自己使用的OS&lt;/p&gt;
 
 &lt;h3 id=&quot;二正文&quot;&gt;二、正文&lt;/h3&gt;
