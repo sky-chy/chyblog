@@ -12,8 +12,9 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Mac OS, OS, Mac, 苹果�
 继上节介绍了Mac OS的程序坞（又叫Dock栏），这节就来说说Mac OS的访达（又叫Finder）,访达和程序坞作为日常使用中最常用的部分，我们也有必要对它进行深度了解
 
 ### 二、正文
-程序坞默认情况下是处于屏幕的正下方，如下图所示：<br/>
-![Dock](/images/posts/mac/mac-os-finder.png)
+
+1. 程序坞默认情况下是处于屏幕的正下方，如下图所示：<br/>
+    ![Dock](/images/posts/mac/mac-os-finder.png)
 
   * `1`，这个地方是对`12`的浏览记录进行前进或者后退的，如下图所示：<br/>
   ![Dock](/images/posts/mac/mac-os-finder-1.gif)
@@ -53,3 +54,9 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Mac OS, OS, Mac, 苹果�
 
   
   * `12`，这个地方是内容区，文件夹和文件将会在这个地方进行展示的
+
+1. 新建、重命名和删除文件夹：
+
+1. 新建、重命名和删除文件：
+
+1. 复制、拷贝和黏贴文件：
