@@ -4,7 +4,7 @@ layout: post
 title: Python3创建自带虚拟环境报错
 categories: [Python3, Python, venv]
 author: CHY
-description: python3 -m venv xxxx时，报Error: Command '['E:\\Code\\Python\\Git\\test1\\aaa\\Scripts\\python.exe', '-Im', 'ensurepip', '--upgrade', '--default-pip']' returned non-zero exit status 1.)
+description: python3 -m venv xxxx时，报 Error: Command '['/www/venv/xxx/bin/python3.11', '-m', 'ensurepip', '--upgrade', '--default-pip']' returned non-zero exit status 1.
 keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Python, Python3, 虚拟环境, venv, Python -m venv, Python3 -m venv
 ---
 
