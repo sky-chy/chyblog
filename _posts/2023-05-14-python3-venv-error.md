@@ -1,11 +1,3 @@
-<!--
- * @Author: chenhongye chy13699726462
- * @Date: 2023-05-14 07:51:05
- * @LastEditors: chenhongye chy13699726462
- * @LastEditTime: 2023-05-14 08:21:34
- * @FilePath: /chyblog/_posts/20235-14-python3-venv-error.md
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 ---
 topmost: false #置顶
 layout: post
