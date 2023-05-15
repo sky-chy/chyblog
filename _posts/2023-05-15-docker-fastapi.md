@@ -161,12 +161,12 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
 
         # 复制项目文件到容器中
         COPY . /www/docker_server/xxx
-
-        # 安装项目依赖
-        RUN pip install --no-cache-dir -r requirements.txt
         
         # 安装supervisor
         RUN apt-get update && apt-get install -y supervisor
+
+        # 安装项目依赖
+        RUN pip install --no-cache-dir -r requirements.txt
 
         # 暴露端口
         EXPOSE 80
