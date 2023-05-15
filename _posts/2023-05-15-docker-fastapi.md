@@ -162,7 +162,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
         # 复制项目文件到容器中
         COPY . /www/docker_server/renren_education
 
-        COPY ./config/supervisord.ini /etc/supervisor/conf.d/supervisord.ini
+        COPY config/supervisord.ini /etc/supervisor/conf.d/supervisord.ini
 
         # 安装supervisor
         RUN apt-get update && apt-get install -y supervisor
