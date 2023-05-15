@@ -166,6 +166,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
         RUN apt-get update && apt-get install -y supervisor
 
         # 安装项目依赖
+        # --no-cache-dir 代表不使用缓存来安装 Python 包
         RUN pip install --no-cache-dir -r requirements.txt
 
         # 暴露端口
