@@ -182,6 +182,11 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
             `-t xxx`：指定了要构建的镜像的名称和标签。-t 是标签的缩写，xxx 是镜像的名称。可以根据需要修改名称和标签。
             `.`：表示当前目录，它告诉 Docker 在当前目录中查找 Dockerfile 文件并使用它来构建镜像。
 
+    * 将 nginx.conf 文件复制到 Docker 容器中：
+        + 执行`sudo docker cp config/nginx.conf <容器ID或容器名称>:/etc/nginx/nginx.conf`命令
+            `config/nginx.conf`，表示的是项目中的nginx配置文件
+            `<容器ID或容器名称>:/etc/nginx/nginx.conf`，表示的是容器内的目标路径，表示文件将被复制到容器中的`/etc/nginx` 目录下，并被命名为`nginx.conf`
+ 
 1. 运行Docker:
     * 执行`sudo docker run -d -p 80:80 xxx`命令，这将在后台运行一个名为 xxx 的 Docker 容器，并将主机的 80 端口映射到容器的 80 端口
         + `-d`：是一个选项，表示在后台模式下运行容器，docker
@@ -195,8 +200,10 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
 无
 
 ### 九、相关资源
-`sudo docker images`， 这将列出所有已构建的 Docker 镜像
-`sudo docker ps`，列出当前正在运行的容器
-`sudo docker stop <容器ID或容器名称>`，停止该容器
-`sudo docker rm <容器ID或容器名称>`，删除该容器
-`sudo service docker status`，可以查看docker的运行状态
+* `sudo docker images`， 这将列出所有已构建的 Docker 镜像
+* `sudo docker ps`，列出当前正在运行的容器
+* `sudo docker start <容器ID或容器名称>`， 启动该容器
+* `sudo docker stop <容器ID或容器名称>`，停止该容器
+* `sudo docker rm <容器ID或容器名称>`，删除该容器
+* `sudo docker restart <容器ID或容器名称>`，重新启动容器
+* `sudo service docker status`，可以查看docker的运行状态
