@@ -135,7 +135,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
         在项目的config文件夹下新建一个名称为`supervisor.ini`的文件，并填入如下代码：
         ```conf
         [supervisord]
-        nodaemon=true
+        nodaemon=true #为 true 时，Supervisor 将以非守护进程的方式运行，也就是在前台运行。这意味着 Supervisor 进程本身不会在后台以守护进程的形式运行，并且终端会一直保持与 Supervisor 进程的连接，显示其输出和日志信息；为 false（默认值），Supervisor 将以守护进程的方式运行，也就是在后台默默地运行，并且不会将输出和日志信息直接发送到终端。在这种模式下，你通常会将日志保存到文件中，以便后续查看。
 
         [program:gunicorn_renren_education]
         command=/gunicorn -c /www/docker_server/renren-education/config/gconfig.py main:app
