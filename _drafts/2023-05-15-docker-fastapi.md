@@ -31,11 +31,11 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
 
 ### 五、实现步骤
 1. 安装Docker:
-    + 执行`sudo apt update`，更新也行软件包列表
+    + 执行`sudo apt update`，更新软件包列表
     + 执行`sudo apt install apt-transport-https ca-certificates curl software-properties-common`，安装依赖包以允许使用 HTTPS 通过 apt 访问 Docker 仓库
     + 执行`curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg`，添加 Docker 官方 GPG 密钥
     + 执行`echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null`，添加 Docker 软件源
-    + 执行`sudo apt update`，更新也行软件包列表
+    + 执行`sudo apt update`，更新软件包列表
     + 执行`sudo apt install docker-ce docker-ce-cli containerd.io`，安装 Docker
     + 执行`sudo service docker start`，启动 Docker 服务
     + 执行`sudo docker run hello-world`，如果一切顺利，你将看到一个 Hello World 的提示消息，表示 Docker 已经成功安装并运行
