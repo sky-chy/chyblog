@@ -157,11 +157,13 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
         FROM python:3.11
 
         # 设置工作目录
-        WORKDIR /www/docker_server/xxx
+        WORKDIR /www/docker_server/renren_education
 
         # 复制项目文件到容器中
-        COPY . /www/docker_server/xxx
-        
+        COPY . /www/docker_server/renren_education
+
+        COPY ./config/supervisord.ini /etc/supervisor/conf.d/supervisord.ini
+
         # 安装supervisor
         RUN apt-get update && apt-get install -y supervisor
 
@@ -170,11 +172,11 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
         RUN pip install --no-cache-dir -r requirements.txt
 
         # 暴露端口
-        EXPOSE 80
-        EXPOSE 443
+        EXPOSE 80 
 
         # 启动 Supervisord
-        CMD ["supervisord", "-c", "config/supervisord.ini"]
+        CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+
         ```
 
     * 构建容器：
