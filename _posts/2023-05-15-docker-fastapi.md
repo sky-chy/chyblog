@@ -173,7 +173,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
         EXPOSE 443
 
         # 启动 Supervisord
-        CMD ["supervisord", "-c", "/www/docker_server/xxx/config/supervisord.ini"]
+        CMD ["supervisord", "-c", "config/supervisord.ini"]
         ```
 
     * 构建容器：
@@ -188,22 +188,27 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
             `<容器ID或容器名称>:/etc/nginx/nginx.conf`，表示的是容器内的目标路径，表示文件将被复制到容器中的`/etc/nginx` 目录下，并被命名为`nginx.conf`
  
 1. 运行Docker:
-    * 执行`sudo docker run -d -p 80:80 xxx`命令，这将在后台运行一个名为 xxx 的 Docker 容器，并将主机的 80 端口映射到容器的 80 端口
+    * 执行`sudo docker run -d -p 80:80 --name aaa xxx`命令，这将在后台运行一个名为 xxx 的 Docker 容器，并将主机的 80 端口映射到容器的 80 端口
         + `-d`：是一个选项，表示在后台模式下运行容器，docker
         + `-p 80:80`：可以将主机的 80 端口与容器的 80 端口进行映射，Dockerfile文件中的`EXPOSE`命令只是声明容器内部的端口，但并不会自动进行主机端口的映射
+        + `aaa`:为容器指定一个可识别的名称
         + `xxx`：要运行的 Docker 镜像的名称。通过指定镜像名称，Docker 将在该镜像的基础上创建并运行一个容器，这个xxx与`sudo docker build -t xxx .`中的```xxx```是相关的，通过构建镜像并为其指定名称后，可以使用该名称来运行该镜像创建的容器。
 
 ### 七、归纳总结
 无
 
 ### 八、注意事项
-无
+如果项目文件有更新，可以执行`sudo docker run -d -p 80:80 -p 443:443 --name 容器名称 -v /www/server/xxx:/www/docker_server/xxx 容器镜像名称`命令进行挂载更新
+
 
 ### 九、相关资源
 * `sudo docker images`， 这将列出所有已构建的 Docker 镜像
 * `sudo docker ps`，列出当前正在运行的容器
+* `sudo docker ps -a`，查看所有容器的状态
 * `sudo docker start <容器ID或容器名称>`， 启动该容器
 * `sudo docker stop <容器ID或容器名称>`，停止该容器
 * `sudo docker rm <容器ID或容器名称>`，删除该容器
 * `sudo docker restart <容器ID或容器名称>`，重新启动容器
+* `sudo docker rmi <容器名称>`，删除容器镜像
+* `sudo docker logs <容器名称>`，可以查看容器的日志
 * `sudo service docker status`，可以查看docker的运行状态
