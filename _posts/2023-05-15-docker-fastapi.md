@@ -166,7 +166,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
         RUN pip install --no-cache-dir -r requirements.txt
         
         # 安装supervisor
-        RUN apt-get install -y supervisor
+        RUN apt-get update && apt-get install -y supervisor
 
         # 暴露端口
         EXPOSE 80
