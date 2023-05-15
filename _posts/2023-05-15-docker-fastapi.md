@@ -198,7 +198,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
 无
 
 ### 八、注意事项
-如果项目文件有更新，可以执行`sudo docker run -d -p 80:80 -p 443:443 --name 容器名称 -v /www/server/xxx:/www/docker_server/xxx 容器镜像名称`命令进行挂载更新
+如果项目文件有更新，但是不更新容器的配置文件，可以执行`sudo docker run -d -p 80:80 --name 容器名称 -v /www/server/xxx:/www/docker_server/xxx 容器镜像名称`命令进行挂载更新，`-v /www/server/xxx:/www/docker_server/xxx`部分是用于将本地的 /www/server/xxx 目录挂载到容器内的 /www/docker_server/xxx 目录，以实现主机和容器之间的文件共享，这样，新的项目文件将被复制到容器中，并且容器将在更新后重新启动。
 
 
 ### 九、相关资源
