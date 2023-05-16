@@ -198,6 +198,8 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
 1. `Dockerfile`文件中的`WORKDIR /app`目录配置要跟 `COPY . /www/app`的目标目录保持一致
 
 ### 九、相关资源
+* `sudo docker build -t 容器名称 .`，构建容器的命令，`.`代表需要构建的路径，一般是含有`Dockerfile`配置文件的路径
+* `sudo docker -d -p 宿主机端口:容器端口 -v 项目路径:容器工作目录`，`-d`是一个选项，表示在后台模式下运行容器，`-p`指定了端口映射的规则
 * `sudo docker images`， 这将列出所有已构建的 Docker 镜像
 * `sudo docker ps`，列出当前正在运行的容器
 * `sudo docker ps -a`，查看所有容器的状态
