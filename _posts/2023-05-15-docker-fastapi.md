@@ -1,11 +1,11 @@
 ---
 topmost: false #置顶
 layout: post
-title: Ubuntu22.04.2 LTS使用Docker部署Supervisord+Gunicorn+Nginx+Python3.11+Fastapi
-categories: [Docker, Supervisord, Gunicorn, Nginx, Fastapi, Ubuntu]
+title: Ubuntu22.04.2 LTS使用Docker+Gunicorn+Nginx+Python3.11部署Fastapi
+categories: [Docker, Gunicorn, Nginx, Fastapi, Ubuntu]
 author: CHY
-description: Ubuntu22.04.2 LTS使用Docker部署Supervisord+Gunicorn+Nginx+Python3.11+Fastapi
-keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gunicorn, Nginx, Fastapi, Python3.11, Python3, Ubuntu22.04.2
+description: Ubuntu22.04.2 LTS使用Docker+Gunicorn+Nginx+Python3.11部署Fastapi
+keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx, Fastapi, Python3.11, Python3, Ubuntu22.04.2
 ---
 
 ### 一、情景导入
@@ -14,7 +14,6 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
 ### 二、关键词
 * Ubuntu22.04.2
 * Docker容器
-* Supervisord
 * Gunicorn
 * Nginx
 * 部署Fastapi 
@@ -30,11 +29,12 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
 + Fastapi 0.95.0
 
 ### 五、实现步骤
-1. 安装Docker:
-
-1. 构建Docker容器： 
-
-1. 运行Docker:
+1. 安装Docker
+1. 构建Docker容器 
+1. 运行Docker
+1. 配置nginx文件
+1. 启动宿主机的nginx服务
+1. 打开浏览器测试访问
 
 ### 六、实操代码
 1. 安装Docker:
@@ -79,9 +79,9 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
         # critical:严重错误消息；
         loglevel = 'debug'
         # 访问日志路径
-        accesslog = '/var/log/gunicorn/access.log'
+        accesslog = '/www/docker_server/xxx/log/gunicorn/access.log'
         # 错误日志路径
-        errorlog = '/var/log/gunicorn/error.log'
+        errorlog = '/www/docker_server/xxx/log/gunicorn/error.log'
         # 设置gunicorn访问日志格式，错误日志无法设置
         access_log_format = '%(t)s %(p)s %(h)s "%(r)s" %(s)s %(L)s %(b)s %(f)s" "%(a)s"'
 
@@ -89,67 +89,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
         # gunicorn -c gconfig.py main:app
         # gunicorn -c gconfig.py main:app -k uvicorn.workers.UvicornWorker
         ```
-    
-    * 编写Nginx配置文件：
-        在项目的config文件夹下新建一个名称为`nginx.conf`的文件，并填入如下代码：
-        ```conf
-        worker_processes 1;
-
-        events {
-            worker_connections 1024;
-        }
-
-        http {
-            upstream xxx {
-                server unix:/tmp/gunicorn.sock fail_timeout=0;
-            }
-
-            server {
-                listen 80;
-                server_name 你的域名 127.0.0.1; #需要将yourdomain.com替换成证书绑定的域名。
-                root /www/docker_server/xxx;
-        #         rewrite ^(.*)$ https://$host$1; #将所有HTTP请求通过rewrite指令重定向到HTTPS。
-        #         location / {
-        #             index index.html index.htm;
-        #         }
-
-                location / {
-                    proxy_set_header x-Real-IP $remote_addr;
-                    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                    proxy_set_header Host $http_host;
-                    include proxy_params;
-                    proxy_pass http://xxx;
-                }
-                location /coronavirus {
-                    alias /www/docker_server/xxx/coronavirus/static;
-                }
-                location /txt {
-                    alias /www/docker_server/xxx/coronavirus/txt;
-                }
-            }
-        }
-
-        ```
-    
-    * 编写Supervisor配置文件:
-        在项目的config文件夹下新建一个名称为`supervisor.ini`的文件，并填入如下代码：
-        ```conf
-        [supervisord]
-        nodaemon=true #为 true 时，Supervisor 将以非守护进程的方式运行，也就是在前台运行。这意味着 Supervisor 进程本身不会在后台以守护进程的形式运行，并且终端会一直保持与 Supervisor 进程的连接，显示其输出和日志信息；为 false（默认值），Supervisor 将以守护进程的方式运行，也就是在后台默默地运行，并且不会将输出和日志信息直接发送到终端。在这种模式下，你通常会将日志保存到文件中，以便后续查看。
-
-        [program:gunicorn_renren_education]
-        command=/gunicorn -c /www/docker_server/renren-education/config/gconfig.py main:app
-        directory=/www/docker_server/xxx #项目目录
-        user=root
-        autorestart=true #设置自动重启
-        startretires=3  #重启失败3次
-        stdout_logfile=/var/log/supervisor/renren-education-stdout.log
-        stderr_logfile=/var/log/supervisor/renren-education-stderr.log
-
-        [program:nginx_renren_education]
-        command=nginx -c /www/docker_server/xxx/config/nginx.conf
-        ```
-
+     
     * 编写Docker配置文件：
         在项目的根目录下新建一个名称为`Dockerfile`的文件，并填入如下代码：
         ```conf
@@ -157,25 +97,29 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
         FROM python:3.11
 
         # 设置工作目录
-        WORKDIR /www/docker_server/renren_education
+        WORKDIR /www/docker_server/xxx
 
         # 复制项目文件到容器中
-        COPY . /www/docker_server/renren_education
-
-        COPY config/supervisord.ini /etc/supervisor/conf.d/supervisord.ini
-
-        # 安装supervisor
-        RUN apt-get update && apt-get install -y supervisor
+        COPY . /www/docker_server/xxx
 
         # 安装项目依赖
         # --no-cache-dir 代表不使用缓存来安装 Python 包
         RUN pip install --no-cache-dir -r requirements.txt
 
-        # 暴露端口
-        EXPOSE 80 
+        # 安装 Gunicorn
+        RUN pip install gunicorn
 
-        # 启动 Supervisord
-        CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+        # 创建日志目录
+        RUN mkdir -p /www/docker_server/xxx/log/gunicorn
+
+        # 设置日志目录权限
+        RUN chmod -R 777 /www/docker_server/xxx/log/gunicorn
+
+        # 暴露端口
+        EXPOSE 8000
+
+        # 启动Gunicorn
+        CMD ["gunicorn", "main:app", "-c", "config/gconfig.py"]
 
         ```
 
@@ -184,24 +128,42 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
         + 执行`sudo docker build -t xxx .`命令，开始构建容器
             `-t xxx`：指定了要构建的镜像的名称和标签。-t 是标签的缩写，xxx 是镜像的名称。可以根据需要修改名称和标签。
             `.`：表示当前目录，它告诉 Docker 在当前目录中查找 Dockerfile 文件并使用它来构建镜像。
-
-    * 将 nginx.conf 文件复制到 Docker 容器中：
-        + 执行`sudo docker cp config/nginx.conf <容器ID或容器名称>:/etc/nginx/nginx.conf`命令
-            `config/nginx.conf`，表示的是项目中的nginx配置文件
-            `<容器ID或容器名称>:/etc/nginx/nginx.conf`，表示的是容器内的目标路径，表示文件将被复制到容器中的`/etc/nginx` 目录下，并被命名为`nginx.conf`
+ 
  
 1. 运行Docker:
-    * 执行`sudo docker run -d -p 80:80 --name aaa xxx`命令，这将在后台运行一个名为 xxx 的 Docker 容器，并将主机的 80 端口映射到容器的 80 端口
+    * 执行`sudo docker run -d -p 8000:8000 --name aaa xxx`命令，这将在后台运行一个名为 xxx 的 Docker 容器，并将主机的 80 端口映射到容器的 80 端口
         + `-d`：是一个选项，表示在后台模式下运行容器，docker
-        + `-p 80:80`：可以将主机的 80 端口与容器的 80 端口进行映射，Dockerfile文件中的`EXPOSE`命令只是声明容器内部的端口，但并不会自动进行主机端口的映射
+        + `-p 8000:8000`：可以将主机的8000端口与容器的8000端口进行映射，Dockerfile文件中的`EXPOSE`命令只是声明容器内部的端口，但并不会自动进行主机端口的映射
         + `aaa`:为容器指定一个可识别的名称
         + `xxx`：要运行的 Docker 镜像的名称。通过指定镜像名称，Docker 将在该镜像的基础上创建并运行一个容器，这个xxx与`sudo docker build -t xxx .`中的```xxx```是相关的，通过构建镜像并为其指定名称后，可以使用该名称来运行该镜像创建的容器。
+
+1. 配置nginx文件：
+    * 在宿主机的`/etc/nginx/conf.d`路径下新建一个`xxx.conf`文件，并填入如下代码:
+        ```conf
+        server {
+            listen 80;
+            server_name yourdomain.com; #需要将yourdomain.com替换成证书绑定的域名。
+
+            location / {
+                proxy_pass http://localhost:8000;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+        }
+        ```
+1. 启动宿主机的nginx服务：
+    * 执行`server nginx restart`命令，进行重启nginx服务
+
+1. 打开浏览器测试访问：
+    * 打开浏览器输入`yourdomain.com`即可访问到部署的应用
 
 ### 七、归纳总结
 无
 
 ### 八、注意事项
-1. 如果项目文件有更新，但是不更新容器的配置文件，可以执行`sudo docker run -d -p 80:80 --name 容器名称 -v /www/server/xxx:/www/docker_server/xxx 容器镜像名称`命令进行挂载更新，`-v /www/server/xxx:/www/docker_server/xxx`部分是用于将本地的 `/www/server/xxx` 目录挂载到容器内的 `/www/docker_server/xxx` 目录，以实现主机和容器之间的文件共享，这样，新的项目文件将被复制到容器中，并且容器将在更新后重新启动。
+1. 如果项目文件有更新，但是不更新容器的配置文件，可以执行`sudo docker run -d -p 8000:8000 --name 容器名称 -v /www/server/xxx:/www/docker_server/xxx 容器镜像名称`命令进行挂载更新，`-v /www/server/xxx:/www/docker_server/xxx`部分是用于将本地的 `/www/server/xxx` 目录挂载到容器内的 `/www/docker_server/xxx` 目录，以实现主机和容器之间的文件共享，这样，新的项目文件将被复制到容器中，并且容器将在更新后重新启动。
 
 1. `Dockerfile`文件中的`WORKDIR /www/docker_server/xxx`目录配置要跟 `COPY . /www/docker_server/xxx`的目标目录保持一致
 
@@ -216,3 +178,4 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Supervisord, Gun
 * `sudo docker rmi <容器名称>`，删除容器镜像
 * `sudo docker logs <容器名称>`，可以查看容器的日志
 * `sudo service docker status`，可以查看docker的运行状态
+* `sudo docker cp <容器ID>:/var/log/gunicorn/access.log /www/log/gunicorn/access.log`，可以将容器中的`/var/log/gunicorn/access.log`文件导出到宿主机的`/www/log/gunicorn/access.log`文件中
