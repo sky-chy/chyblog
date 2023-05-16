@@ -29,6 +29,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
 + Fastapi 0.95.0
 
 ### 五、实现步骤
+1. 上传项目到服务器
 1. 安装Docker
 1. 构建Docker容器 
 1. 运行Docker
@@ -46,6 +47,10 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
     + 执行`sudo apt install docker-ce docker-ce-cli containerd.io`，安装 Docker
     + 执行`sudo service docker start`，启动 Docker 服务
     + 执行`sudo docker run hello-world`，如果一切顺利，你将看到一个 Hello World 的提示消息，表示 Docker 已经成功安装并运行
+
+1. 拷贝项目到服务器：
+    * 可以通过SCP或者FTP把项目上传到服务器的`/www/server`路径下，并执行`cd /www/server/你的项目路径`打开这个路径中的项目
+    * 执行`sudo mkdir /www/docker_server/xxx`命令，创建docker的工作目录
 
 1. 构建Docker容器：
     * 编写Gunicorn配置文件：
