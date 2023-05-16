@@ -59,7 +59,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
         import os
 
         # 项目根目录路径
-        base_dir = os.path.dirname(os.path.abspath(__file__))
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         proc_name = 'gunicorn_education_project'  # 进程名
         timeout = 120  # 设置超时时间120s，默认为30s。按自己的需求进行设置timeout = 120
         debug = True
@@ -193,6 +193,8 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
 无
 
 ### 八、注意事项
+1. 虽然我在`Dockerfile`文件中配置了`gunicorn`的日志路径，但是在启动`gconfig.py`文件的时候，还是会报`Error: Error: '/app/log/gunicorn/error.log' isn't writable [FileNotFoundError(2, 'No such file or directory')]`，后来在项目里面直接创建了`log/gunicorn`路径后重启docker，就离奇的好了，暂时未知原因，先埋一个坑
+
 1. 如果项目文件有更新，但是不更新容器的配置文件，可以执行`sudo docker run -d -p 9090:8000 --name 容器名称 -v /www/server/xxx:/app 容器镜像名称`命令进行挂载更新，`-v /www/server/xxx:/app 容器镜像名称`部分是用于将本地的 `/www/server/xxx` 目录挂载到容器内的 `/www/app` 目录，并指定镜像名称，以实现主机和容器之间的文件共享，这样，新的项目文件将被复制到容器中，并且容器将在更新后重新启动。
 
 1. `Dockerfile`文件中的`WORKDIR /app`目录配置要跟 `COPY . /www/app`的目标目录保持一致
