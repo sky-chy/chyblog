@@ -115,13 +115,12 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
         RUN pip install gunicorn
 
         # 创建日志目录
-        RUN mkdir -p /www/docker_server/renren_education/log
-        RUN mkdir -p /www/docker_server/renren_education/log/gunicorn
+        RUN mkdir -p log/gunicorn
 
         # 设置日志目录权限
         RUN chmod -R 777 /www/docker_server/renren_education/log/gunicorn
-        RUN touch /www/docker_server/renren_education/log/gunicorn/error.log
-        RUN touch /www/docker_server/renren_education/log/gunicorn/access.log
+        RUN touch log/gunicorn/error.log
+        RUN touch log/gunicorn/access.log
 
         # 暴露端口
         EXPOSE 8000
