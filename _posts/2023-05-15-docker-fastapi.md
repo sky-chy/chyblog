@@ -62,8 +62,8 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
         # reload_engine = 'inotify'
         # reload_extra_files = []
         # //绑定与Nginx通信的端口
-        # bind = '0.0.0.0:8000'
-        bind = 'unix:/tmp/gunicorn.sock'
+        bind = '0.0.0.0:8000'
+        # bind = 'unix:/tmp/gunicorn.sock'
         # pidfile = './log/gunicorn.pid'
 
         # workers = 4  # 进程数
@@ -97,10 +97,10 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
         FROM python:3.11
 
         # 设置工作目录
-        WORKDIR /www/docker_server/xxx
+        WORKDIR /www/docker_server/renren_education
 
         # 复制项目文件到容器中
-        COPY . /www/docker_server/xxx
+        COPY . /www/docker_server/renren_education
 
         # 安装项目依赖
         # --no-cache-dir 代表不使用缓存来安装 Python 包
@@ -110,17 +110,19 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
         RUN pip install gunicorn
 
         # 创建日志目录
-        RUN mkdir -p /www/docker_server/xxx/log/gunicorn
+        RUN mkdir -p /www/docker_server/renren_education/log
+        RUN mkdir -p /www/docker_server/renren_education/log/gunicorn
 
         # 设置日志目录权限
-        RUN chmod -R 777 /www/docker_server/xxx/log/gunicorn
+        RUN chmod -R 777 /www/docker_server/renren_education/log/gunicorn
+        RUN touch /www/docker_server/renren_education/log/gunicorn/error.log
+        RUN touch /www/docker_server/renren_education/log/gunicorn/access.log
 
         # 暴露端口
         EXPOSE 8000
-
+        
         # 启动Gunicorn
         CMD ["gunicorn", "main:app", "-c", "config/gconfig.py"]
-
         ```
 
     * 构建容器：
@@ -131,30 +133,54 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
  
  
 1. 运行Docker:
-    * 执行`sudo docker run -d -p 80:8000 --name aaa xxx`命令，这将在后台运行一个名为 xxx 的 Docker 容器，并将主机的 80 端口映射到容器的 8000 端口
+    * 执行`sudo docker run -d -p 9090:8000 --name aaa xxx`命令，这将在后台运行一个名为 xxx 的 Docker 容器，并将主机的 9090 端口映射到容器的 8000 端口
         + `-d`：是一个选项，表示在后台模式下运行容器，docker
-        + `-p 00:8000`：可以将主机的80端口与容器的8000端口进行映射，Dockerfile文件中的`EXPOSE`命令只是声明容器内部的端口，但并不会自动进行主机端口的映射
+        + `-p 9090:8000`：可以将主机的9090端口与容器的8000端口进行映射，Dockerfile文件中的`EXPOSE`命令只是声明容器内部的端口，但并不会自动进行主机端口的映射
         + `aaa`:为容器指定一个可识别的名称
         + `xxx`：要运行的 Docker 镜像的名称。通过指定镜像名称，Docker 将在该镜像的基础上创建并运行一个容器，这个xxx与`sudo docker build -t xxx .`中的```xxx```是相关的，通过构建镜像并为其指定名称后，可以使用该名称来运行该镜像创建的容器。
 
 1. 配置nginx文件：
     * 在宿主机的`/etc/nginx/conf.d`路径下新建一个`xxx.conf`文件，并填入如下代码:
         ```conf
+        upstream renren_education {
+            server 127.0.0.1:9090 fail_timeout=100;
+        }
+        
         server {
             listen 80;
             server_name yourdomain.com; #需要将yourdomain.com替换成证书绑定的域名。
+            rewrite ^(.*)$ https://$host$1; #将所有HTTP请求通过rewrite指令重定向到HTTPS。
+            location / {
+                index index.html index.htm;
+            }
+        }
+
+        server {
+            listen 443 ssl;
+            #配置HTTPS的默认访问端口为443。
+            #如果未在此处配置HTTPS的默认访问端口，可能会造成Nginx无法启动。
+            #如果您使用Nginx 1.15.0及以上版本，请使用listen 443 ssl代替listen 443和ssl on。
+            server_name yourdomain.com; #需要将yourdomain.com替换成证书绑定的域名。
+            root /www/server/xxx;
+            ssl_certificate /etc/nginx/cert/xxx.pem;  #需要将cert-file-name.pem替换成已上传的证书文件的名称。
+            ssl_certificate_key /etc/nginx/cert/xxx.key; #需要将cert-file-name.key替换成已上传的证书私钥文件的名称。
+            ssl_session_timeout 5m;
+            ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+            #表示使用的加密套件的类型。
+            ssl_protocols TLSv1 TLSv1.1 TLSv1.2; #表示使用的TLS协议的类型。
+            ssl_prefer_server_ciphers on;
 
             location / {
-                proxy_pass http://localhost:8000;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header x-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_set_header Host $http_host;
+                include proxy_params;
+                proxy_pass http://renren_education;
             }
         }
         ```
 1. 启动宿主机的nginx服务：
-    * 执行`server nginx restart`命令，进行重启nginx服务
+    * 执行`server nginx reload`命令，进行重启nginx服务
 
 1. 打开浏览器测试访问：
     * 打开浏览器输入`yourdomain.com`即可访问到部署的应用
@@ -163,7 +189,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
 无
 
 ### 八、注意事项
-1. 如果项目文件有更新，但是不更新容器的配置文件，可以执行`sudo docker run -d -p 80:8000 --name 容器名称 -v /www/server/xxx:/www/docker_server/xxx 容器镜像名称`命令进行挂载更新，`-v /www/server/xxx:/www/docker_server/xxx`部分是用于将本地的 `/www/server/xxx` 目录挂载到容器内的 `/www/docker_server/xxx` 目录，以实现主机和容器之间的文件共享，这样，新的项目文件将被复制到容器中，并且容器将在更新后重新启动。
+1. 如果项目文件有更新，但是不更新容器的配置文件，可以执行`sudo docker run -d -p 9090:8000 --name 容器名称 -v /www/server/xxx:/www/docker_server/xxx 容器镜像名称`命令进行挂载更新，`-v /www/server/xxx:/www/docker_server/xxx 容器名称`部分是用于将本地的 `/www/server/xxx` 目录挂载到容器内的 `/www/docker_server/xxx` 目录，以实现主机和容器之间的文件共享，这样，新的项目文件将被复制到容器中，并且容器将在更新后重新启动。
 
 1. `Dockerfile`文件中的`WORKDIR /www/docker_server/xxx`目录配置要跟 `COPY . /www/docker_server/xxx`的目标目录保持一致
 
