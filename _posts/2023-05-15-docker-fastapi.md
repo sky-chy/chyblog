@@ -50,7 +50,6 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
 
 1. 拷贝项目到服务器：
     * 可以通过SCP或者FTP把项目上传到服务器的`/www/server`路径下，并执行`cd /www/server/你的项目路径`打开这个路径中的项目
-    * 执行`sudo mkdir /www/docker_server/xxx`命令，创建docker的工作目录
 
 1. 构建Docker容器：
     * 编写Gunicorn配置文件：
@@ -84,15 +83,11 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
         # critical:严重错误消息；
         loglevel = 'debug'
         # 访问日志路径
-        accesslog = '/www/docker_server/xxx/log/gunicorn/access.log'
+        accesslog = 'log/gunicorn/access.log'
         # 错误日志路径
-        errorlog = '/www/docker_server/xxx/log/gunicorn/error.log'
+        errorlog = 'log/gunicorn/error.log'
         # 设置gunicorn访问日志格式，错误日志无法设置
         access_log_format = '%(t)s %(p)s %(h)s "%(r)s" %(s)s %(L)s %(b)s %(f)s" "%(a)s"'
-
-        # 执行命令
-        # gunicorn -c gconfig.py main:app
-        # gunicorn -c gconfig.py main:app -k uvicorn.workers.UvicornWorker
         ```
      
     * 编写Docker配置文件：
@@ -102,10 +97,10 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
         FROM python:3.11
 
         # 设置工作目录
-        WORKDIR /www/docker_server/renren_education
+        WORKDIR /app
 
         # 复制项目文件到容器中
-        COPY . /www/docker_server/renren_education
+        COPY . /app
 
         # 安装项目依赖
         # --no-cache-dir 代表不使用缓存来安装 Python 包
@@ -118,7 +113,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
         RUN mkdir -p log/gunicorn
 
         # 设置日志目录权限
-        RUN chmod -R 777 /www/docker_server/renren_education/log/gunicorn
+        RUN chmod -R 777 log/gunicorn
         RUN touch log/gunicorn/error.log
         RUN touch log/gunicorn/access.log
 
@@ -193,9 +188,9 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
 无
 
 ### 八、注意事项
-1. 如果项目文件有更新，但是不更新容器的配置文件，可以执行`sudo docker run -d -p 9090:8000 --name 容器名称 -v /www/server/xxx:/www/docker_server/xxx 容器镜像名称`命令进行挂载更新，`-v /www/server/xxx:/www/docker_server/xxx 容器镜像名称`部分是用于将本地的 `/www/server/xxx` 目录挂载到容器内的 `/www/docker_server/xxx` 目录，并指定镜像名称，以实现主机和容器之间的文件共享，这样，新的项目文件将被复制到容器中，并且容器将在更新后重新启动。
+1. 如果项目文件有更新，但是不更新容器的配置文件，可以执行`sudo docker run -d -p 9090:8000 --name 容器名称 -v /www/server/xxx:/app 容器镜像名称`命令进行挂载更新，`-v /www/server/xxx:/app 容器镜像名称`部分是用于将本地的 `/www/server/xxx` 目录挂载到容器内的 `/www/app` 目录，并指定镜像名称，以实现主机和容器之间的文件共享，这样，新的项目文件将被复制到容器中，并且容器将在更新后重新启动。
 
-1. `Dockerfile`文件中的`WORKDIR /www/docker_server/xxx`目录配置要跟 `COPY . /www/docker_server/xxx`的目标目录保持一致
+1. `Dockerfile`文件中的`WORKDIR /app`目录配置要跟 `COPY . /www/app`的目标目录保持一致
 
 ### 九、相关资源
 * `sudo docker images`， 这将列出所有已构建的 Docker 镜像
@@ -208,4 +203,4 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
 * `sudo docker rmi <容器名称>`，删除容器镜像
 * `sudo docker logs <容器名称>`，可以查看容器的日志
 * `sudo service docker status`，可以查看docker的运行状态
-* `sudo docker cp <容器ID>:/var/log/gunicorn/access.log /www/log/gunicorn/access.log`，可以将容器中的`/var/log/gunicorn/access.log`文件导出到宿主机的`/www/log/gunicorn/access.log`文件中
+* `sudo docker cp <容器ID>:/log/gunicorn/access.log /www/log/gunicorn/access.log`，可以将容器中的`/log/gunicorn/access.log`文件导出到宿主机的`/www/log/gunicorn/access.log`文件中
