@@ -131,9 +131,9 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
  
  
 1. 运行Docker:
-    * 执行`sudo docker run -d -p 8000:8000 --name aaa xxx`命令，这将在后台运行一个名为 xxx 的 Docker 容器，并将主机的 80 端口映射到容器的 80 端口
+    * 执行`sudo docker run -d -p 80:8000 --name aaa xxx`命令，这将在后台运行一个名为 xxx 的 Docker 容器，并将主机的 80 端口映射到容器的 8000 端口
         + `-d`：是一个选项，表示在后台模式下运行容器，docker
-        + `-p 8000:8000`：可以将主机的8000端口与容器的8000端口进行映射，Dockerfile文件中的`EXPOSE`命令只是声明容器内部的端口，但并不会自动进行主机端口的映射
+        + `-p 00:8000`：可以将主机的80端口与容器的8000端口进行映射，Dockerfile文件中的`EXPOSE`命令只是声明容器内部的端口，但并不会自动进行主机端口的映射
         + `aaa`:为容器指定一个可识别的名称
         + `xxx`：要运行的 Docker 镜像的名称。通过指定镜像名称，Docker 将在该镜像的基础上创建并运行一个容器，这个xxx与`sudo docker build -t xxx .`中的```xxx```是相关的，通过构建镜像并为其指定名称后，可以使用该名称来运行该镜像创建的容器。
 
@@ -163,7 +163,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
 无
 
 ### 八、注意事项
-1. 如果项目文件有更新，但是不更新容器的配置文件，可以执行`sudo docker run -d -p 8000:8000 --name 容器名称 -v /www/server/xxx:/www/docker_server/xxx 容器镜像名称`命令进行挂载更新，`-v /www/server/xxx:/www/docker_server/xxx`部分是用于将本地的 `/www/server/xxx` 目录挂载到容器内的 `/www/docker_server/xxx` 目录，以实现主机和容器之间的文件共享，这样，新的项目文件将被复制到容器中，并且容器将在更新后重新启动。
+1. 如果项目文件有更新，但是不更新容器的配置文件，可以执行`sudo docker run -d -p 80:8000 --name 容器名称 -v /www/server/xxx:/www/docker_server/xxx 容器镜像名称`命令进行挂载更新，`-v /www/server/xxx:/www/docker_server/xxx`部分是用于将本地的 `/www/server/xxx` 目录挂载到容器内的 `/www/docker_server/xxx` 目录，以实现主机和容器之间的文件共享，这样，新的项目文件将被复制到容器中，并且容器将在更新后重新启动。
 
 1. `Dockerfile`文件中的`WORKDIR /www/docker_server/xxx`目录配置要跟 `COPY . /www/docker_server/xxx`的目标目录保持一致
 
