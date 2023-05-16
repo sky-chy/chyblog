@@ -56,7 +56,10 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
         在项目的config文件夹下新建一个名称为`gconfig.py`的文件，并填入如下代码：
         ```python
         import multiprocessing
+        import os
 
+        # 项目根目录路径
+        base_dir = os.path.dirname(os.path.abspath(__file__))
         proc_name = 'gunicorn_education_project'  # 进程名
         timeout = 120  # 设置超时时间120s，默认为30s。按自己的需求进行设置timeout = 120
         debug = True
@@ -82,10 +85,14 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
         # error:错误消息；
         # critical:严重错误消息；
         loglevel = 'debug'
+
+        # 日志目录路径
+        log_dir = os.path.join(base_dir, 'log', 'gunicorn')
         # 访问日志路径
-        accesslog = 'log/gunicorn/access.log'
+        accesslog = os.path.join(log_dir, 'access.log')
         # 错误日志路径
-        errorlog = 'log/gunicorn/error.log'
+        errorlog = os.path.join(log_dir, 'error.log')
+
         # 设置gunicorn访问日志格式，错误日志无法设置
         access_log_format = '%(t)s %(p)s %(h)s "%(r)s" %(s)s %(L)s %(b)s %(f)s" "%(a)s"'
         ```
@@ -110,12 +117,10 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
         RUN pip install gunicorn
 
         # 创建日志目录
-        RUN mkdir -p log/gunicorn
+        RUN mkdir -p /app/log/gunicorn
 
         # 设置日志目录权限
-        RUN chmod -R 777 log/gunicorn
-        RUN touch log/gunicorn/error.log
-        RUN touch log/gunicorn/access.log
+        RUN chmod -R 777 /app/log/gunicorn
 
         # 暴露端口
         EXPOSE 8000
