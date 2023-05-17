@@ -202,6 +202,8 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
 
 1. 如果项目的数据库跟Docker容器在同一个服务器上，项目里面直接配置服务器的内网地址即可访问该数据库
 
+1. 如果要实时查看docker内部产生的日志，需要使用标准的logging库进行日志打印
+
 ### 九、相关资源
 * `sudo docker build -t 容器名称 .`，构建容器的命令，`.`代表需要构建的路径，一般是含有`Dockerfile`配置文件的路径
 * `sudo docker -d -p 宿主机端口:容器端口 -v 项目路径:容器工作目录`，`-d`是一个选项，表示在后台模式下运行容器，`-p`指定了端口映射的规则
@@ -214,5 +216,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
 * `sudo docker restart <容器ID或容器名称>`，重新启动容器
 * `sudo docker rmi <容器名称>`，删除容器镜像
 * `sudo docker logs <容器名称>`，可以查看容器的日志
+* `sudo docker logs -f <容器名称>`，可以实时查看容器的日志
+* `sudo truncate -s 0 /var/lib/docker/containers/<container_id>/<container_id>-json.log`，可以清空该容器的日志
 * `sudo service docker status`，可以查看docker的运行状态
 * `sudo docker cp <容器ID>:/log/gunicorn/access.log /www/log/gunicorn/access.log`，可以将容器中的`/log/gunicorn/access.log`文件导出到宿主机的`/www/log/gunicorn/access.log`文件中
