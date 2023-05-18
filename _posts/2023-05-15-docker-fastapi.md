@@ -9,7 +9,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
 ---
 
 ### 一、情景导入
-无
+近日开始把公司的项目进行重构，项目之前都是部署到python3自带的虚拟环境中，感觉很麻烦，而且频繁碰壁，最明显的就是在执行`python3 -m venv 虚拟环境路径`创建虚拟环境的时候，经常报：[`'Error: Command '['/www/venv/xxx/bin/python3.11', '-m', 'ensurepip', '--upgrade', '--default-pip']' returned non-zero exit status 1.`](https://chyblog.cn/2023/05/14/python3-venv-error/)错误，虽然加入`--without-pip`，但是后续还有很多坑，所需我们索性改为部署到Docker中，虽然在Docker部署的时候，有时候Docker执行pip安装包会报超时，但是重新执行一下Docker构建命令基本都能解决
 
 ### 二、关键词
 * Ubuntu22.04.2
