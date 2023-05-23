@@ -1,15 +1,15 @@
 ---
 topmost: false #置顶
 layout: post
-title: Ubuntu22.04.2 LTS使用Docker+Gunicorn+Nginx+Python3.11部署Fastapi
+title: Ubuntu22.04.2 LTS下使用Nginx+Docker+Gunicorn+Python3.11部署Fastapi，并开启SSL
 categories: [Docker, Gunicorn, Nginx, Fastapi, Ubuntu]
 author: CHY
-description: Ubuntu22.04.2 LTS使用Docker+Gunicorn+Nginx+Python3.11部署Fastapi
+description: Ubuntu22.04.2 LTS下使用Nginx+Docker+Gunicorn+Python3.11部署Fastapi，并开启SSL
 keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx, Fastapi, Python3.11, Python3, Ubuntu22.04.2
 ---
 
 ### 一、情景导入
-无
+近日开始把公司的项目进行重构，项目之前都是部署到python3自带的虚拟环境中，感觉很麻烦，而且频繁碰壁，最明显的就是在执行`python3 -m venv 虚拟环境路径`创建虚拟环境的时候，经常报：[`'Error: Command '['/www/venv/xxx/bin/python3.11', '-m', 'ensurepip', '--upgrade', '--default-pip']' returned non-zero exit status 1.`](https://chyblog.cn/2023/05/14/python3-venv-error/)错误，虽然加入`--without-pip`，但是后续还有很多坑，所需我们索性改为部署到Docker中，虽然在Docker部署的时候，有时候Docker执行pip安装包会报超时，但是重新执行一下Docker构建命令基本都能解决
 
 ### 二、关键词
 * Ubuntu22.04.2
@@ -196,11 +196,13 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
 ### 八、注意事项
 1. 虽然我在`Dockerfile`文件中配置了`gunicorn`的日志路径，但是在启动`gconfig.py`文件的时候，还是会报`Error: Error: '/app/log/gunicorn/error.log' isn't writable [FileNotFoundError(2, 'No such file or directory')]`，后来在项目里面直接创建了`log/gunicorn`路径后重启docker，就离奇的好了，暂时未知原因，先埋一个坑
 
-1. 如果项目文件有更新，但是不更新容器的配置文件，可以执行`sudo docker run -d -p 9090:8000 --name 容器名称 -v /www/server/xxx:/app 容器镜像名称`命令进行挂载更新，`-v /www/server/xxx:/app 容器镜像名称`部分是用于将本地的 `/www/server/xxx` 目录挂载到容器内的 `/app` 目录，并指定镜像名称，以实现主机和容器之间的文件共享，这样，新的项目文件将被复制到容器中，并且容器将在更新后重新启动。
+1. 如果项目文件有更新，但是不更新容器的配置文件，可以执行`sudo docker run -d -p 9090:8000 --name 容器名称 -v /www/server/xxx:/app 容器镜像名称`命令进行挂载更新，`-v /www/server/xxx:/app 容器镜像名称`部分是用于将本地的 `/www/server/xxx` 目录挂载到容器内的 `/app` 目录，并指定镜像名称，以实现主机和容器之间的文件共享，这样，新的项目文件将被复制到容器中，并且容器将在更新后重新启动。如果发现项目没有更新，可以执行`sudo docker restart 容器名称`来重启项目
 
 1. `Dockerfile`文件中的`WORKDIR /app`目录配置要跟 `COPY . /app`的目标目录保持一致
 
 1. 如果项目的数据库跟Docker容器在同一个服务器上，项目里面直接配置服务器的内网地址即可访问该数据库
+
+1. 如果要实时查看docker内部产生的日志，需要使用标准的logging库进行日志打印
 
 ### 九、相关资源
 * `sudo docker build -t 容器名称 .`，构建容器的命令，`.`代表需要构建的路径，一般是含有`Dockerfile`配置文件的路径
@@ -214,5 +216,7 @@ keywords: 陈宏业, CHY, 一切随猿, 教程, 网站, Docker, Gunicorn, Nginx,
 * `sudo docker restart <容器ID或容器名称>`，重新启动容器
 * `sudo docker rmi <容器名称>`，删除容器镜像
 * `sudo docker logs <容器名称>`，可以查看容器的日志
+* `sudo docker logs -f <容器名称>`，可以实时查看容器的日志
+* `sudo truncate -s 0 /var/lib/docker/containers/<container_id>/<container_id>-json.log`，可以清空该容器的日志
 * `sudo service docker status`，可以查看docker的运行状态
 * `sudo docker cp <容器ID>:/log/gunicorn/access.log /www/log/gunicorn/access.log`，可以将容器中的`/log/gunicorn/access.log`文件导出到宿主机的`/www/log/gunicorn/access.log`文件中
