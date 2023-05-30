@@ -16,7 +16,7 @@ Android的常见ADB命令，以及相关命令的简单使用
 1. ADB通过网络连接手机：
    * 先把手机通过USB接入电脑，如果通过下属命令可以直接连接到手机的，则不需要执行这一步;
    * 执行```adb kill-server```命令，将ADB进程杀掉；
-   * 执行```adb tcpip 5555```命令，将ADB通讯端口设为5555，该端口一般为Android系统的通讯端口；
+   * 执行```adb tcpip 5555```命令，将ADB通讯端口设为5555，该端口一般为Android系统默认调试的通讯端口；
    * 把连接Android手机的USB数据线拔出；
    * 执行```adb connect xxx.xxx.x.xxx```命令，将通过adb连接Android手机，xxx.xxx.x.xxx为Android手机的IP地址
 
