@@ -24,6 +24,9 @@ Android的常见ADB命令，以及相关命令的简单使用
 
 1. 执行```adb shell am start -a android.intent.action.VIEW -d 'https://wwww.baidu.com'```命令，可以打开系统的浏览器并访问```https://wwww.baidu.com```
 
+1. 执行```adb shell settings delete global http_proxy```或者```adb shell settings delete global global_http_proxy_host```可以取消代理
+
+
 ### 三、注意事项
 如果有多台设备连接，需要通过ADB命令进行调试，则需要加入```-s ip:port```来指定连接哪台设备
 
